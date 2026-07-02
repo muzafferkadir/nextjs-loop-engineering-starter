@@ -33,9 +33,9 @@ services — no Docker, no cloud database, nothing to provision.
 | Independent verifier | `.claude/agents/loop-verifier.md` + `pnpm verify` (same pipeline as CI) |
 | Deterministic e2e | Playwright, pinned viewport/locale/timezone, seeded SQLite |
 | Agent vision | `pnpm snap` screenshots pages so the agent can *see* its changes |
-| Denylist enforcement | One list in `LOOP.md`, enforced by a local edit hook, the verifier, and CI |
-| Kill switch & budget | `loop: paused` in STATE.md; daily token cap in `loop-budget.md` |
-| Concurrency lock | `scripts/loop-lock.sh` — one feature, one agent |
+| Denylist enforcement | One list in `LOOP.md`, enforced by a local hook (file edits **and** Bash writes, fail-closed), the verifier, and CI |
+| Kill switch & budget | `loop: paused` in STATE.md; daily cap **measured** by a Stop hook (`.loop/usage/`), not self-reported |
+| Concurrency lock | `scripts/loop-lock.sh` — local file + git ref on origin, visible across clones |
 
 ---
 
@@ -84,7 +84,7 @@ features — write them concrete and checkable. Keep the `pnpm snap` line
 for UI features; flag schema changes (they require human approval, see
 LOOP.md → Human Gates).
 
-### Step 2 — Run L1 first (calibration, ~10 runs)
+### Step 2 — Run L1 first (observe, ~10 runs)
 
 Don't let the loop write code on day one. Start in report-only mode:
 
@@ -93,12 +93,9 @@ Don't let the loop write code on day one. Start in report-only mode:
 ```
 
 Each run, the agent scans PRs/CI/backlog and updates `STATE.md`. Your
-daily 5 minutes: read STATE.md and fill in the "Human" column of the
-calibration table (was the agent's triage right?). After ~10 runs:
-
-```bash
-bash scripts/l1-score.sh    # precision & recall ≥ 0.85 → ready for L2
-```
+daily 5 minutes: read STATE.md and ask "would I have flagged the same
+things?". After ~10 runs of triage you trust, you're ready for L2 —
+readiness is a human call.
 
 ### Step 3 — Start L2 (the loop builds features)
 
@@ -120,6 +117,9 @@ You stay in the loop as the gate:
 
 - **Review the PR** — the verifier verdict and visual-check note are in
   the body. Merge when satisfied; there is no auto-merge.
+- **Enforce the gate in GitHub** — protect `main` (Settings → Branches:
+  require a pull request + the CI status check, no force pushes). "A human
+  merges every PR" should be a repository setting, not a convention.
 - **Move the feature to Done** in FEATURES.md (or let the next triage do it).
 - **Refill the backlog** — the loop idles safely when Backlog is empty.
 - **Watch the health signals** — `loop-run-log.md` (what happened),
@@ -210,7 +210,7 @@ Work through these in order — each step keeps the rails intact:
 ## Loop Levels (short version)
 
 - **L1 (Report)** — the loop only triages and writes to STATE.md. Run this
-  for ~10 days and score it (`scripts/l1-score.sh`) before anything else.
+  for ~10 days and read its output daily before anything else.
 - **L2 (Assisted)** — the loop implements Backlog features; every PR passes
   the independent verifier; a human merges.
 - **L3 (Unattended)** — not configured here on purpose. Earn it first.

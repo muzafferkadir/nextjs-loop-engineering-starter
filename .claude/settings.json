@@ -16,7 +16,6 @@
       "Bash(bash scripts/budget-check.sh:*)",
       "Bash(bash scripts/check-denylist.sh:*)",
       "Bash(bash scripts/check-loop-state.sh:*)",
-      "Bash(bash scripts/l1-score.sh:*)",
       "Bash(bash scripts/loop-lock.sh:*)",
       "Bash(bash scripts/run-verifier.sh:*)",
       "Bash(bash scripts/verifier-self-test.sh:*)",
@@ -34,11 +33,21 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Edit|Write|MultiEdit",
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit|Bash",
         "hooks": [
           {
             "type": "command",
             "command": "node \"$CLAUDE_PROJECT_DIR/scripts/hooks/deny-edit.mjs\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/hooks/log-usage.mjs\""
           }
         ]
       }

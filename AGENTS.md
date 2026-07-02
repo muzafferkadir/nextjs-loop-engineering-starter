@@ -13,7 +13,7 @@ Inside Claude Code:
 # L1 — Daily triage (first ~10 days: report only, no code changes)
 /loop 1d Run $loop-triage. Read STATE.md and FEATURES.md first. No code changes.
 
-# L2 — Feature development (after L1 calibration is complete)
+# L2 — Feature development (after the L1 observation period)
 /loop 1d Run $loop-triage. Then if the Backlog has items, run $loop-fix for the highest priority one.
 ```
 
@@ -131,7 +131,7 @@ src/
   db/                   Drizzle schema, client, deterministic seed
   lib/                  Pure helpers (auth.ts is DENYLISTED)
 e2e/                    Playwright specs + global setup (reseeds DB)
-scripts/                Loop guard scripts (hooks/ is DENYLISTED)
+scripts/                Loop guard scripts (all of scripts/ is DENYLISTED)
 ```
 
 ---

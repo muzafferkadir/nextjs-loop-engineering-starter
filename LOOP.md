@@ -8,23 +8,35 @@
 
 ## Budget
 
-- Max tokens/day: 100,000
+- Max tokens/day: 100,000 (cost-weighted — cache reads count at 10%)
 - Alert at: 80,000
 - Kill switch: write `loop: paused` into STATE.md
+- Measured, not self-reported: a Stop hook (scripts/hooks/log-usage.mjs)
+  records real transcript usage into .loop/usage/, and
+  scripts/budget-check.sh reads it (run-log estimates are only a fallback —
+  the check always uses the higher number)
 
 ## Denylist
 
 Agents must never touch these paths. Enforced three ways: locally by the
-PreToolUse hook in `.claude/settings.json`, in the verifier, and in CI —
-all three read the patterns from this section, so this list is the single
-source of truth.
+PreToolUse hook wired in .claude/settings.json (direct file edits **and**
+Bash write commands such as sed -i or output redirects; fail-closed if
+this list is unreadable), in the verifier, and in CI — all three read the
+backtick-quoted patterns from this section, so this list is the single
+source of truth. The enforcement surface protects itself: this file, the
+guard scripts, CI, and the hook wiring are all listed, so an agent cannot
+weaken the rules it runs under. Changes to any of these paths are made by
+a human, committed directly to main.
 
 - `.env*`
 - `secrets/**`
 - `src/lib/auth.ts` (session/auth changes are always a human decision)
 - `drizzle/**` (generated migrations — review, don't edit)
-- `.claude/settings.json` (the enforcement layer itself)
-- `scripts/hooks/**` (the enforcement layer itself)
+- `LOOP.md` (this config and the denylist itself)
+- `.claude/settings.json` (the hook wiring)
+- `scripts/**` (guard scripts, hooks, and the verifier pipeline)
+- `.github/**` (CI runs the verifier — part of the enforcement)
+- `.loop/**` (measured budget records)
 - `*.pem`
 - `*.key`
 
@@ -40,13 +52,15 @@ source of truth.
 
 If more than one loop runs on this project:
 - Priority: CI fix → PR babysitter → feature development → triage
-- Two agents never touch the same file concurrently (loop.lock)
+- Two agents never touch the same file concurrently (loop.lock locally,
+  plus a git ref on origin so locks are visible across clones/worktrees —
+  see scripts/loop-lock.sh)
 - The token budget is shared across all loops
 
 ## L1 → L2 Transition Criteria
 
 - At least 10 stable L1 runs logged in loop-run-log.md
-- Triage accuracy ≥ 85% (precision and recall — see `scripts/l1-score.sh`)
+- You read STATE.md after each run and trust the triage calls (human judgment)
 - Verifier self-test passes: `bash scripts/verifier-self-test.sh`
 - loop-budget.md filled in
 - Denylist enforcement verified (self-test covers this)

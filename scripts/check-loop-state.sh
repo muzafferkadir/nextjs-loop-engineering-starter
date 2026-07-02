@@ -11,10 +11,11 @@ FAILED=0
 echo "🔍 Loop state consistency check"
 echo ""
 
-# 1. WIP entries require a lock
+# 1. WIP entries require a lock (local file or remote git ref)
 WIP_ITEMS=$(awk '/^## WIP/{found=1; next} /^## /{found=0} found && /^###/{print}' "$FEATURES" 2>/dev/null | wc -l | tr -d ' ')
-if [ "$WIP_ITEMS" -gt 0 ] && [ ! -f "$LOCK" ]; then
-  echo "❌ WIP item(s) in FEATURES.md but no loop.lock exists"
+if [ "$WIP_ITEMS" -gt 0 ] && [ ! -f "$LOCK" ] \
+   && ! bash scripts/loop-lock.sh status 2>/dev/null | grep -q "🔒 Remote lock:"; then
+  echo "❌ WIP item(s) in FEATURES.md but no lock exists (local or remote)"
   echo "   Either acquire the lock or move WIP back to Backlog"
   FAILED=1
 else
@@ -55,7 +56,7 @@ fi
 L1_RUN_COUNT=$(grep -c "^## [0-9]" loop-run-log.md 2>/dev/null || echo 0)
 if [ "$WIP_ITEMS" -gt 0 ] && [ "$L1_RUN_COUNT" -lt 10 ]; then
   echo "⚠️  L2 attempted with only $L1_RUN_COUNT logged L1 runs (recommended ≥10)"
-  echo "   Complete L1 triage calibration before L2 feature work"
+  echo "   Watch ~10 L1 triage runs before starting L2 feature work"
   # Warning only — L2 readiness is a human call
 fi
 

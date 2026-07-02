@@ -35,11 +35,9 @@ Daily triage. **Write no code.** Report only.
    - Items checked: N PRs, N CI runs, N features
    - Actions: STATE.md updated
    - Escalations: N
-   - Tokens: <estimate for this run>
+   - Tokens: <estimate — real usage is measured by the Stop hook into .loop/usage/>
    - Next run: <date>
    ```
-8. **Append a calibration row** to the "L1 Calibration Notes" section in
-   STATE.md — leave the "Human" column empty; a human fills it in.
 
 ---
 

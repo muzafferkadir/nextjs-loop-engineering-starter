@@ -67,6 +67,43 @@ else
 fi
 echo ""
 
+# Test 5: hook blocks Bash write commands on denylisted paths
+echo "── Test 5: PreToolUse hook blocks Bash writes to denylisted paths"
+HOOK_INPUT='{"tool_name":"Bash","tool_input":{"command":"sed -i .bak s/a/b/ src/lib/auth.ts"}}'
+if echo "$HOOK_INPUT" | CLAUDE_PROJECT_DIR="$(pwd)" node scripts/hooks/deny-edit.mjs 2>&1 | grep -q "DENYLIST"; then
+  echo "✅ PASS — hook blocks 'sed -i' on src/lib/auth.ts"
+  PASS_COUNT=$((PASS_COUNT+1))
+else
+  echo "❌ FAIL — Bash write to a denylisted path was not blocked"
+  FAIL_COUNT=$((FAIL_COUNT+1))
+fi
+echo ""
+
+# Test 6: read-only Bash mention of a denylisted path passes
+echo "── Test 6: read-only Bash commands are not blocked"
+HOOK_INPUT='{"tool_name":"Bash","tool_input":{"command":"grep -n session src/lib/auth.ts"}}'
+if echo "$HOOK_INPUT" | CLAUDE_PROJECT_DIR="$(pwd)" node scripts/hooks/deny-edit.mjs 2>&1 | grep -q "DENYLIST"; then
+  echo "❌ FAIL — read-only grep of a denylisted path was blocked (too strict)"
+  FAIL_COUNT=$((FAIL_COUNT+1))
+else
+  echo "✅ PASS — read-only mention passes"
+  PASS_COUNT=$((PASS_COUNT+1))
+fi
+echo ""
+
+# Test 7: guard is fail-closed when LOOP.md is missing
+echo "── Test 7: guard fails closed without LOOP.md"
+TMP_GUARD_DIR=$(mktemp -d)
+if echo '{"tool_input":{"file_path":"x.ts"}}' | CLAUDE_PROJECT_DIR="$TMP_GUARD_DIR" node scripts/hooks/deny-edit.mjs 2>&1 | grep -q "fail-closed"; then
+  echo "✅ PASS — guard blocks when its denylist source is unreadable"
+  PASS_COUNT=$((PASS_COUNT+1))
+else
+  echo "❌ FAIL — guard silently allowed edits without LOOP.md (fail-open)"
+  FAIL_COUNT=$((FAIL_COUNT+1))
+fi
+rm -rf "$TMP_GUARD_DIR"
+echo ""
+
 # Summary
 echo "══════════════════════"
 echo "Self-test: $PASS_COUNT passed, $FAIL_COUNT failed"
