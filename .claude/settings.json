@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm e2e:*)",
+      "Bash(pnpm verify:*)",
+      "Bash(pnpm snap:*)",
+      "Bash(pnpm db:push:*)",
+      "Bash(pnpm db:seed:*)",
+      "Bash(pnpm db:reset:*)",
+      "Bash(bash scripts/budget-check.sh:*)",
+      "Bash(bash scripts/check-denylist.sh:*)",
+      "Bash(bash scripts/check-loop-state.sh:*)",
+      "Bash(bash scripts/l1-score.sh:*)",
+      "Bash(bash scripts/loop-lock.sh:*)",
+      "Bash(bash scripts/run-verifier.sh:*)",
+      "Bash(bash scripts/verifier-self-test.sh:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/hooks/deny-edit.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
