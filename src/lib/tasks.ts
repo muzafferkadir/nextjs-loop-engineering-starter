@@ -1,4 +1,4 @@
-import type { TaskPriority, TaskStatus } from "@/db/schema";
+import type { Task, TaskPriority, TaskStatus } from "@/db/schema";
 import { TASK_STATUSES } from "@/db/schema";
 
 const STATUS_LABELS: Record<TaskStatus, string> = {
@@ -39,4 +39,26 @@ export function statusBadgeVariant(
     case "todo":
       return "outline";
   }
+}
+
+export type TaskSummary = {
+  total: number;
+  byStatus: Record<TaskStatus, number>;
+};
+
+export function summarizeTasks(taskList: readonly Pick<Task, "status">[]): TaskSummary {
+  const byStatus: Record<TaskStatus, number> = {
+    todo: 0,
+    in_progress: 0,
+    done: 0,
+  };
+
+  for (const task of taskList) {
+    byStatus[task.status] += 1;
+  }
+
+  return {
+    total: taskList.length,
+    byStatus,
+  };
 }

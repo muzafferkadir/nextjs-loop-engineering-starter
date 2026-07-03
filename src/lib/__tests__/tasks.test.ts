@@ -4,6 +4,7 @@ import {
   priorityLabel,
   statusBadgeVariant,
   statusLabel,
+  summarizeTasks,
 } from "@/lib/tasks";
 
 describe("nextStatus", () => {
@@ -38,5 +39,36 @@ describe("statusBadgeVariant", () => {
       statusBadgeVariant("done"),
     ]);
     expect(variants.size).toBe(3);
+  });
+});
+
+describe("summarizeTasks", () => {
+  it("counts total tasks and groups them by status", () => {
+    expect(
+      summarizeTasks([
+        { status: "todo" },
+        { status: "in_progress" },
+        { status: "done" },
+        { status: "done" },
+      ]),
+    ).toEqual({
+      total: 4,
+      byStatus: {
+        todo: 1,
+        in_progress: 1,
+        done: 2,
+      },
+    });
+  });
+
+  it("returns zero counts for an empty task list", () => {
+    expect(summarizeTasks([])).toEqual({
+      total: 0,
+      byStatus: {
+        todo: 0,
+        in_progress: 0,
+        done: 0,
+      },
+    });
   });
 });

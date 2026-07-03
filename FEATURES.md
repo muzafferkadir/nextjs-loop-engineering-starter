@@ -10,7 +10,7 @@ The loop agent takes work from this file. States:
 
 ## Backlog
 
-_(empty — add your features here using the format below)_
+_(empty)_
 
 <!-- Feature format — copy this block into the Backlog and give it the
      next F-number. Acceptance criteria are exactly what the loop
@@ -35,7 +35,16 @@ _(empty — add your features here using the format below)_
 
 ## WIP
 
-_(nothing in progress — check the lock with: `bash scripts/loop-lock.sh status`)_
+### F-101: Tasks Summary
+**Priority:** High
+**Description:** Signed-in users see a compact task summary above the Tasks list.
+**Acceptance criteria:**
+- Summary appears above the task list on `/tasks`
+- Shows total task count and a To do / In progress / Done breakdown for the signed-in user's non-deleted tasks
+- Empty-state-compatible summary when the user has no tasks
+- Server Component data flow — no client-side fetching
+- Unit test for the aggregation logic and e2e coverage for the rendered summary
+- `pnpm snap /tasks` output visually inspected
 
 ---
 

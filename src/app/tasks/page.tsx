@@ -6,7 +6,9 @@ import { getCurrentUser } from "@/lib/auth";
 import { TaskForm } from "@/components/task-form";
 import { TaskItem } from "@/components/task-item";
 import { Button } from "@/components/ui/button";
+import { summarizeTasks } from "@/lib/tasks";
 import { advanceTask, deleteTask, logout } from "./actions";
+import { TaskSummary } from "./task-summary";
 
 export default async function TasksPage() {
   const user = await getCurrentUser();
@@ -16,6 +18,7 @@ export default async function TasksPage() {
     where: and(eq(tasks.userId, user.id), isNull(tasks.deletedAt)),
     orderBy: [desc(tasks.updatedAt)],
   });
+  const summary = summarizeTasks(taskList);
 
   return (
     <main className="mx-auto max-w-2xl space-y-6 p-4 py-10">
@@ -34,6 +37,8 @@ export default async function TasksPage() {
       </header>
 
       <TaskForm />
+
+      <TaskSummary summary={summary} />
 
       {taskList.length === 0 ? (
         <div className="rounded-lg border border-dashed p-10 text-center text-sm text-muted-foreground">

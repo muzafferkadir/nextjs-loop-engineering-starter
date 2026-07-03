@@ -13,3 +13,11 @@ this file is the audit trail that answers "what did the loop do?"
 - Tokens: 12400
 - Next run: 2026-07-02 09:15 UTC
 -->
+
+## 2026-07-03 00:05 UTC — Daily Triage (L1)
+- Run ID: triage-20260703-000500
+- Items checked: 0 PRs, 5 CI runs, 1 backlog feature
+- Actions: added F-101 to FEATURES.md Backlog; STATE.md updated
+- Escalations: 0
+- Tokens: ~9000 estimate — real usage is measured by the Stop hook into .loop/usage/
+- Next run: 2026-07-04 00:05 UTC

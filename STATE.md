@@ -1,19 +1,20 @@
 # STATE.md — Loop Memory
 
-Last run: —
+Last run: 2026-07-03 00:05 UTC
 Loop: Daily Triage (L1)
-Active feature: none
+Active feature: F-101
 
 <!-- Kill switch: change "active" to "paused" on the line below to stop all loops. -->
 loop: active
 
 ## High Priority
 
-_(items needing intervention today — the loop fills this in)_
+_(none)_
 
 ## Watch List
 
-_(items that may need action soon — the loop fills this in)_
+- [feature] F-101 Tasks Summary is in progress under L2 lock.
+- Reject count F-101: 1 — verifier e2e timed out after a local dev-server port conflict during UI verification; rerun clean.
 
 ## Waiting on Human
 
