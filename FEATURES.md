@@ -35,7 +35,14 @@ _(empty)_
 
 ## WIP
 
+_(nothing in progress — check the lock with: `bash scripts/loop-lock.sh status`)_
+
+---
+
+## Review
+
 ### F-101: Tasks Summary
+**PR:** https://github.com/muzafferkadir/nextjs-loop-engineering-starter/pull/1
 **Priority:** High
 **Description:** Signed-in users see a compact task summary above the Tasks list.
 **Acceptance criteria:**
@@ -45,12 +52,6 @@ _(empty)_
 - Server Component data flow — no client-side fetching
 - Unit test for the aggregation logic and e2e coverage for the rendered summary
 - `pnpm snap /tasks` output visually inspected
-
----
-
-## Review
-
-_(no PRs waiting for human review)_
 
 ---
 
