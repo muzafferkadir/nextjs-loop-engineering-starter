@@ -13,3 +13,8 @@ this file is the audit trail that answers "what did the loop do?"
 - Tokens: 12400
 - Next run: 2026-07-02 09:15 UTC
 -->
+
+## 2026-07-04 13:40 UTC — Planner
+- Idea: "kullanıcı görevlerine son tarih ekleyelim" → fits one run
+  (precedent: F-002 Task CRUD). Spec'd as F-004 (Task Due Dates), added
+  to Backlog. Schema change flagged for human review.
