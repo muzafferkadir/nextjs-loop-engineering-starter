@@ -5,7 +5,7 @@ The loop agent takes work from this file. States:
 - **Backlog** — specced, not started
 - **WIP** — being implemented right now (lock acquired)
 - **Review** — PR open, waiting for human review
-- **Done** — completed
+- **Done** — merged; entries live in BACKLOG-DONE.md
 
 ---
 
@@ -80,21 +80,8 @@ human approval required before merge)
 
 ## Done
 
-### F-001: Auth (sessions) ✅
-**Shipped in the initial codebase.**
-- Register, login, logout with httpOnly cookie sessions (hashed in DB)
-- `src/lib/auth.ts` — denylisted, human-only from here on
-
-### F-002: Task CRUD ✅
-**Shipped in the initial codebase.**
-- Create with priority, cycle status, soft delete — all via Server Actions
-- Reference implementation for the action pattern: `src/app/tasks/actions.ts`
-- Unit + e2e coverage
-
-### F-003: Deterministic Seed & E2E Rig ✅
-**Shipped in the initial codebase.**
-- Fixed-fixture seed (`src/db/seed.ts`), Playwright with pinned
-  viewport/locale/timezone, `pnpm snap` for visual inspection
+_(merged features move to BACKLOG-DONE.md as 2–3-line summaries + PR
+link — the full spec lives in the PR)_
 
 ---
 
@@ -108,7 +95,7 @@ human approval required before merge)
 6. **Pass the verifier:** `bash scripts/run-verifier.sh F-XXX` must APPROVE
 7. **Open a PR** per the git protocol in AGENTS.md
 8. **Move to Review, release the lock:** `bash scripts/loop-lock.sh release`
-9. **Keep Done lean:** Done entries are 2–3-line summaries + PR link (the
-   full spec lives in the PR). When Done exceeds ~15 entries, move the
-   oldest ones to BACKLOG-ARCHIVE.md — they stay greppable as precedent
-   for the Planner.
+9. **After the PR merges** (you, or the next triage run): move the entry
+   from Review to BACKLOG-DONE.md as a 2–3-line summary + PR link — the
+   full spec lives in the PR. This file stays lean; the Planner greps
+   BACKLOG-DONE.md for precedent.

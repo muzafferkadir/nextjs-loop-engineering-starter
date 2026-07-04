@@ -27,7 +27,7 @@ Run the $loop-triage skill:
 **If the argument starts with "plan":**
 Run the $loop-plan skill with the rest of the argument as the idea
 (or the top BACKLOG.md ## Ideas item if no idea is given):
-- Check precedent (BACKLOG.md Done, loop-run-log.md, git log)
+- Check precedent (BACKLOG-DONE.md, loop-run-log.md, git log)
 - Fits one run → spec it into the Backlog
 - Too broad → propose a split and ASK THE HUMAN — never spec silently
 - DO NOT write code

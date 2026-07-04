@@ -18,7 +18,7 @@ acceptance criteria in BACKLOG.md. **Write no code. Open no PRs.**
 - If STATE.md contains `loop: paused` — stop.
 
 ### 2. Study precedent — has similar work been done?
-- BACKLOG.md `## Done` — similar features, their criteria count and scope
+- BACKLOG-DONE.md — similar completed features, their criteria count and scope
 - loop-run-log.md — how many runs/rejects comparable features took
 - `git log --oneline -20` — the shape of comparable diffs
 

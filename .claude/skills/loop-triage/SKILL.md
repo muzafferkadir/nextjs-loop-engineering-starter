@@ -24,11 +24,13 @@ Daily triage. **Write no code.** Report only.
    - CI on main: red? For how long? (`gh run list --branch main --limit 5`)
    - BACKLOG.md WIP: anything stuck? Stale lock? (`bash scripts/loop-lock.sh stale-check`)
    - STATE.md "Waiting on Human": anything older than 24h?
-6. **Update STATE.md:**
+6. **Move merged items:** any BACKLOG.md Review entry whose PR is
+   merged → move it to BACKLOG-DONE.md as a 2–3-line summary + PR link.
+7. **Update STATE.md:**
    - High Priority: needs intervention today
    - Watch List: may need action soon
    - Resolved: prune closed/merged items
-7. **Append to loop-run-log.md:**
+8. **Append to loop-run-log.md:**
    ```
    ## <UTC date time> — Daily Triage (Report)
    - Run ID: triage-<yyyymmdd-hhmmss>

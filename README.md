@@ -24,6 +24,31 @@ services — no Docker, no cloud database, nothing to provision.
 
 ---
 
+## The 60-Second Guide
+
+Day to day you touch three things: the backlog, the loop command, and
+the PR queue.
+
+1. **Spec the work** — add a feature to `BACKLOG.md` (template inside),
+   or let the Planner write it for you:
+   `/loop-start plan <one-line idea>`.
+2. **Run the loop:**
+   - `/loop-start report` — triage only: scans PRs/CI/backlog, updates
+     STATE.md, **writes no code**. Start here on a new project (~10 runs
+     before trusting it with code).
+   - `/loop-start build` — implements ONE Backlog feature end-to-end
+     (branch, tests, screenshots, verifier) and opens a PR. It never
+     merges.
+3. **Be the gate** — read the PR (verifier verdict + visual-check note
+   are in the body), merge when satisfied, move the entry to
+   `BACKLOG-DONE.md`, refill the backlog.
+
+Emergency stop: set `loop: paused` in STATE.md — everything halts,
+including CI. Setup: [Quickstart](#quickstart) · the full flow:
+[Developing with the Loop](#developing-with-the-loop).
+
+---
+
 ## What Makes This "Loop Ready"
 
 | Rail | Where |
@@ -116,7 +141,7 @@ For each feature the agent: syncs main (`git pull --ff-only`; a dirty
 tree or failed pull stops the run) → acquires the lock → moves it to
 WIP → creates `feature/F-XXX-*` → implements every criterion with
 tests → screenshots the UI and inspects it (`ui-verify`) → runs the
-verifier (`pnpm verify` must APPROVE; 5 REJECTs → it escalates in
+verifier (`bash scripts/run-verifier.sh` must APPROVE; 5 REJECTs → it escalates in
 STATE.md and stops) → opens a PR → moves the feature to Review →
 releases the lock. A human merges every PR.
 
@@ -129,7 +154,8 @@ You stay in the loop as the gate:
 - **Enforce the gate in GitHub** — protect `main` (Settings → Branches:
   require a pull request + the CI status check, no force pushes). "A human
   merges every PR" should be a repository setting, not a convention.
-- **Move the feature to Done** in BACKLOG.md (or let the next triage do it).
+- **Move the feature to BACKLOG-DONE.md** — a 2–3-line summary + PR
+  link; the full spec stays in the PR (or let the next triage do it).
 - **Refill the backlog** — the loop idles safely when Backlog is empty.
 - **Watch the health signals** — `loop-run-log.md` (what happened),
   `.loop/usage/` (what it cost — measured), STATE.md "Waiting on Human"
@@ -163,7 +189,7 @@ pnpm db:studio    # Drizzle Studio
 **Framework — keep and adapt** (the loop machinery):
 
 ```
-AGENTS.md  LOOP.md  STATE.md  BACKLOG.md  loop-run-log.md
+AGENTS.md  LOOP.md  STATE.md  BACKLOG.md  BACKLOG-DONE.md  loop-run-log.md
 .claude/   scripts/  .github/workflows/ci.yml
 playwright.config.ts  e2e/global-setup.ts
 ```
