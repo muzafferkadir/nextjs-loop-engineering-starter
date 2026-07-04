@@ -43,6 +43,12 @@ _(empty — add your features here using the format below)_
 
 ## WIP
 
+_(nothing in progress — check the lock with: `bash scripts/loop-lock.sh status`)_
+
+---
+
+## Review
+
 ### F-004: Task Due Dates
 **Priority:** High
 **Precedent:** Similar to F-002 (Task CRUD) — a schema field addition
@@ -66,11 +72,9 @@ overdue.
 - `pnpm snap /tasks` output visually inspected (include a seeded
   overdue task if convenient)
 
----
-
-## Review
-
-_(no PRs waiting for human review)_
+**PR:** https://github.com/muzafferkadir/nextjs-loop-engineering-starter/pull/2
+**Verifier:** APPROVE — all checks passed (contains a schema change,
+human approval required before merge)
 
 ---
 
