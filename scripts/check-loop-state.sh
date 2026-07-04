@@ -3,7 +3,7 @@
 # Runs in CI to catch loop system violations.
 # Usage: bash scripts/check-loop-state.sh
 
-FEATURES="BACKLOG.md"
+BACKLOG="BACKLOG.md"
 STATE="STATE.md"
 LOCK="loop.lock"
 FAILED=0
@@ -12,7 +12,7 @@ echo "🔍 Loop state consistency check"
 echo ""
 
 # 1. WIP entries require a lock (local file or remote git ref)
-WIP_ITEMS=$(awk '/^## WIP/{found=1; next} /^## /{found=0} found && /^###/{print}' "$FEATURES" 2>/dev/null | wc -l | tr -d ' ')
+WIP_ITEMS=$(awk '/^## WIP/{found=1; next} /^## /{found=0} found && /^###/{print}' "$BACKLOG" 2>/dev/null | wc -l | tr -d ' ')
 if [ "$WIP_ITEMS" -gt 0 ] && [ ! -f "$LOCK" ] \
    && ! bash scripts/loop-lock.sh status 2>/dev/null | grep -q "🔒 Remote lock:"; then
   echo "❌ WIP item(s) in BACKLOG.md but no lock exists (local or remote)"
@@ -25,7 +25,7 @@ fi
 # 2. Active feature in STATE.md must exist in BACKLOG.md
 STATE_FEATURE=$(grep "Active feature:" "$STATE" 2>/dev/null | awk '{print $3}' | tr -d ' ')
 if [ -n "$STATE_FEATURE" ] && [ "$STATE_FEATURE" != "none" ]; then
-  if ! grep -q "$STATE_FEATURE" "$FEATURES" 2>/dev/null; then
+  if ! grep -q "$STATE_FEATURE" "$BACKLOG" 2>/dev/null; then
     echo "❌ STATE.md active feature '$STATE_FEATURE' not found in BACKLOG.md"
     FAILED=1
   else
