@@ -19,7 +19,7 @@ Read the following files in order:
 Then based on the argument:
 
 **If the argument is "report" or empty:**
-Run the $loop-triage skill:
+Run the $loop-report skill:
 - Check open PRs, CI status, BACKLOG.md
 - Update STATE.md (High Priority, Watch List, Resolved)
 - Append to loop-run-log.md
@@ -34,7 +34,7 @@ Run the $loop-plan skill with the rest of the argument as the idea
 - DO NOT write code
 
 **If the argument is "build":**
-Run the $loop-fix skill:
+Run the $loop-build skill:
 - Sync main: `git checkout main && git pull --ff-only` — dirty tree or
   failed pull → report in STATE.md and STOP
 - Check the lock: `bash scripts/loop-lock.sh status`

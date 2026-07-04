@@ -1,6 +1,6 @@
 ---
 name: ui-verify
-description: Visually inspects UI changes by screenshotting routes with pnpm snap and reading the images against a design checklist (layout, spacing, hierarchy, semantic tokens, empty/loading/error states). Use after implementing any UI change, before opening a PR that touches src/app or src/components, or when asked "does it look right".
+description: (loop-engineering) Visually inspects UI changes by screenshotting routes with pnpm snap and reading the images against a design checklist (layout, spacing, hierarchy, semantic tokens, empty/loading/error states). Use after implementing any UI change, before opening a PR that touches src/app or src/components, or when asked "does it look right".
 ---
 
 # ui-verify — Visual Inspection Skill
@@ -12,7 +12,7 @@ Automated checks catch broken code; this catches broken design.
 
 ## When
 
-- After implementing any UI change (loop-fix step 3)
+- After implementing any UI change (loop-build step 3)
 - When a human asks "does it look right?"
 - Before opening any PR that touches `src/app/` or `src/components/`
 

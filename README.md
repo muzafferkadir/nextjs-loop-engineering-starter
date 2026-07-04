@@ -109,8 +109,9 @@ features — write them concrete and checkable. Keep the `pnpm snap` line
 for UI features; flag schema changes (they require human approval, see
 LOOP.md → Human Gates).
 
-Or delegate the spec work to the Planner: hand the `$loop-plan` skill a
-one-line idea (or drop it under BACKLOG.md ## Ideas). It checks past
+Or delegate the spec work to the Planner: `/loop-start plan <one-line idea>`
+(or invoke the `$loop-plan` skill directly), or drop the idea under
+BACKLOG.md ## Ideas and let the Planner pick it up. It checks past
 similar features, decides whether the idea fits a single run, writes
 the acceptance criteria — and when the idea is too broad, proposes a
 split into smaller features for your approval instead of speccing it
@@ -121,7 +122,7 @@ silently.
 Don't let the loop write code on day one. Start in report-only mode:
 
 ```
-/loop 1d Run $loop-triage. Read STATE.md and BACKLOG.md first. No code changes.
+/loop 1d Run $loop-report. Read STATE.md and BACKLOG.md first. No code changes.
 ```
 
 Each run, the agent scans PRs/CI/backlog and updates `STATE.md`. Your
@@ -132,7 +133,7 @@ mode — readiness is a human call.
 ### Step 3 — Start Build mode (the loop builds features)
 
 ```
-/loop 1d Run $loop-triage. Then if the Backlog has items, run $loop-fix for the highest priority.
+/loop 1d Run $loop-report. Then if the Backlog has items, run $loop-build for the highest priority.
 ```
 
 Or drive a single run by hand: `/loop-start build`
@@ -208,27 +209,36 @@ src/db/schema.ts  src/db/seed.ts  e2e/(auth|tasks).spec.ts
 
 Work through these in order — each step keeps the rails intact:
 
-1. **Rename** — `package.json` name, this README's top section,
+1. **Reinitialize git** — this repo's history belongs to the starter,
+   not your project. Disconnect it before doing anything else:
+   ```bash
+   rm -rf .git
+   git init
+   git add -A && git commit -m "chore: initial commit from nextjs-loop-engineering-starter"
+   git remote add origin <your-repo-url>
+   git push -u origin main
+   ```
+2. **Rename** — `package.json` name, this README's top section,
    `src/app/layout.tsx` metadata.
-2. **Write your backlog** — BACKLOG.md, using the template (Step 1 above).
-3. **Tune the rules** — AGENTS.md is the agent's style guide: code rules,
+3. **Write your backlog** — BACKLOG.md, using the template (Step 1 above).
+4. **Tune the rules** — AGENTS.md is the agent's style guide: code rules,
    UI conventions, git protocol. Whatever you don't write there, the
    agent decides for itself.
-4. **Swap the example app** — recommended: let the loop do it via
+5. **Swap the example app** — recommended: let the loop do it via
    BACKLOG.md items. Keep auth (`src/lib/auth.ts` is denylisted) or
    remove it along with the middleware and its e2e; keep
    `src/db/seed.ts` **deterministic** (fixed IDs and dates — e2e and
    `pnpm snap` depend on it); update `scripts/snap.mjs` login selectors
    if your auth differs.
-5. **Update the denylist — in LOOP.md only.** The local edit hook, the
+6. **Update the denylist — in LOOP.md only.** The local edit hook, the
    verifier, and CI all parse that one section. Then re-run
    `bash scripts/verifier-self-test.sh` (if you removed
    `src/lib/auth.ts` from the list, point self-test 4 at one of your own
    protected paths).
-6. **Calibrate the limits** — LOOP.md ## Limits is the single source for
+7. **Calibrate the limits** — LOOP.md ## Limits is the single source for
    the per-run/daily budgets and the reject cap; tune them after a week
    of real `.loop/usage/` data.
-7. **Start in Report mode** — always. See Step 2 above.
+8. **Start in Report mode** — always. See Step 2 above.
 
 ### Common adjustments
 
@@ -247,6 +257,8 @@ Work through these in order — each step keeps the rails intact:
 
 - **Report** — the loop only triages and writes to STATE.md. Run this
   for ~10 days and read its output daily before anything else.
+- **Planner** — turns a short idea into a checkable BACKLOG.md spec;
+  splits oversized ideas only with your approval. Writes no code.
 - **Build** — the loop implements Backlog features; every PR passes
   the independent verifier; a human merges.
 

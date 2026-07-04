@@ -35,8 +35,8 @@ splits oversized ideas into smaller features — a split is only added to
 the Backlog after human approval.
 
 Full procedures: `.claude/skills/loop-plan/SKILL.md` (Planner),
-`.claude/skills/loop-fix/SKILL.md` (Build) and
-`.claude/skills/loop-triage/SKILL.md` (Report — triage only, no code).
+`.claude/skills/loop-build/SKILL.md` (Build) and
+`.claude/skills/loop-report/SKILL.md` (Report — triage only, no code).
 
 ## Limits
 

@@ -1,6 +1,6 @@
 ---
 name: loop-plan
-description: Planner — turns a short feature idea into a detailed BACKLOG.md spec before any Build run. Checks past similar work to decide whether the idea fits one loop run; if it is too broad, proposes a split into smaller features and asks the human to approve. Use when asked to "plan a feature", "spec this idea", "run the planner", or before adding anything to the Backlog.
+description: (loop-engineering) Planner — turns a short feature idea into a detailed BACKLOG.md spec before any Build run. Checks past similar work to decide whether the idea fits one loop run; if it is too broad, proposes a split into smaller features and asks the human to approve. Use when asked to "plan a feature", "spec this idea", "run the planner", or before adding anything to the Backlog.
 ---
 
 # loop-plan — Planner Skill (spec before code)

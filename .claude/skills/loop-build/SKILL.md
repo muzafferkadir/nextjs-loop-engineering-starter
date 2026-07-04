@@ -1,9 +1,9 @@
 ---
-name: loop-fix
-description: Implements exactly one feature from the BACKLOG.md Backlog — syncs main, acquires the loop lock, creates a feature branch, implements all acceptance criteria with tests, visually inspects UI changes, passes the independent verifier, and opens a PR. Use for Build-mode loop runs, or when asked to "implement a feature", "work the backlog", or "run build mode".
+name: loop-build
+description: (loop-engineering) Implements exactly one feature from the BACKLOG.md Backlog — syncs main, acquires the loop lock, creates a feature branch, implements all acceptance criteria with tests, visually inspects UI changes, passes the independent verifier, and opens a PR. Use for Build-mode loop runs, or when asked to "implement a feature", "work the backlog", or "run build mode".
 ---
 
-# loop-fix — Build Mode Skill (plan-execute-verify)
+# loop-build — Build Mode Skill (plan-execute-verify)
 
 Implement ONE feature from the BACKLOG.md Backlog. Nothing else.
 

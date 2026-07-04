@@ -1,9 +1,9 @@
 ---
-name: loop-triage
-description: Runs the daily Report-mode triage — checks open PRs, CI status and the BACKLOG.md backlog, then updates STATE.md and appends to the run log without writing any code. Use for scheduled daily loop runs, project health checks, or when asked to "triage", "run report mode", or "update the loop state".
+name: loop-report
+description: (loop-engineering) Runs the daily Report-mode triage — checks open PRs, CI status and the BACKLOG.md backlog, then updates STATE.md and appends to the run log without writing any code. Use for scheduled daily loop runs, project health checks, or when asked to "triage", "run report mode", or "update the loop state".
 ---
 
-# loop-triage — Report Mode Triage Skill
+# loop-report — Report Mode Triage Skill
 
 Daily triage. **Write no code.** Report only.
 

@@ -119,7 +119,7 @@ Use `gh pr create`; the body must state which F-XXX it implements, paste the `pn
 
 - **STATE.md / LOOP.md / BACKLOG.md** — loop memory, config (denylist
   and limits are single-sourced in LOOP.md), and backlog. Skills:
-  loop-plan (Planner), loop-triage (Report mode), loop-fix (Build
+  loop-plan (Planner), loop-report (Report mode), loop-build (Build
   mode), ui-verify. Verifier: `.claude/agents/loop-verifier.md`
 - Report-mode runs triage only (STATE.md/BACKLOG.md updates, no code);
   Build mode takes ONE Backlog feature per the rules in BACKLOG.md
