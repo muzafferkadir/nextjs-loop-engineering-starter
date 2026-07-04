@@ -2,7 +2,7 @@
 
 Last run: 2026-07-04 — Daily Triage (Report)
 Loop: Daily Triage (Report)
-Active feature: none
+Active feature: F-005
 
 <!-- Kill switch: change "active" to "paused" on the line below to stop all loops. -->
 loop: active

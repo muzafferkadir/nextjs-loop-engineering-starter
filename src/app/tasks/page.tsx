@@ -3,17 +3,31 @@ import { redirect } from "next/navigation";
 import { db } from "@/db/client";
 import { tasks } from "@/db/schema";
 import { getCurrentUser } from "@/lib/auth";
+import { parseTaskFilters } from "@/lib/tasks";
+import { TaskFilter } from "@/components/task-filter";
 import { TaskForm } from "@/components/task-form";
 import { TaskItem } from "@/components/task-item";
 import { Button } from "@/components/ui/button";
 import { advanceTask, deleteTask, logout } from "./actions";
 
-export default async function TasksPage() {
+type TasksPageProps = {
+  searchParams: Promise<{ status?: string; priority?: string }>;
+};
+
+export default async function TasksPage({ searchParams }: TasksPageProps) {
   const user = await getCurrentUser();
   if (!user) redirect("/login");
 
+  const { status, priority } = parseTaskFilters(await searchParams);
+  const isFiltered = status !== undefined || priority !== undefined;
+
   const taskList = await db.query.tasks.findMany({
-    where: and(eq(tasks.userId, user.id), isNull(tasks.deletedAt)),
+    where: and(
+      eq(tasks.userId, user.id),
+      isNull(tasks.deletedAt),
+      status ? eq(tasks.status, status) : undefined,
+      priority ? eq(tasks.priority, priority) : undefined,
+    ),
     orderBy: [desc(tasks.updatedAt)],
   });
 
@@ -34,10 +48,13 @@ export default async function TasksPage() {
       </header>
 
       <TaskForm />
+      <TaskFilter />
 
       {taskList.length === 0 ? (
         <div className="rounded-lg border border-dashed p-10 text-center text-sm text-muted-foreground">
-          No tasks yet. Add your first task above.
+          {isFiltered
+            ? "No tasks match your filters."
+            : "No tasks yet. Add your first task above."}
         </div>
       ) : (
         <ul className="space-y-2">

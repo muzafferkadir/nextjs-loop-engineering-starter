@@ -1,5 +1,5 @@
 import type { TaskPriority, TaskStatus } from "@/db/schema";
-import { TASK_STATUSES } from "@/db/schema";
+import { TASK_PRIORITIES, TASK_STATUSES } from "@/db/schema";
 
 const STATUS_LABELS: Record<TaskStatus, string> = {
   todo: "To do",
@@ -56,4 +56,21 @@ export function formatDueDate(dueDate: Date): string {
     dateStyle: "medium",
     timeZone: "UTC",
   }).format(dueDate);
+}
+
+export type TaskFilters = {
+  status?: TaskStatus;
+  priority?: TaskPriority;
+};
+
+/** Reads status/priority from raw search params; unknown or missing values mean "all". */
+export function parseTaskFilters(searchParams: {
+  status?: string;
+  priority?: string;
+}): TaskFilters {
+  const status = TASK_STATUSES.find((value) => value === searchParams.status);
+  const priority = TASK_PRIORITIES.find(
+    (value) => value === searchParams.priority,
+  );
+  return { status, priority };
 }
