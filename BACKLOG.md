@@ -49,32 +49,7 @@ _(nothing in progress — check the lock with: `bash scripts/loop-lock.sh status
 
 ## Review
 
-### F-004: Task Due Dates
-**Priority:** High
-**Precedent:** Similar to F-002 (Task CRUD) — a schema field addition
-paired with matching form/display UI, delivered in one run.
-**Description:** Users can set an optional due date when creating a
-task, see it on the task item, and see at a glance when a task is
-overdue.
-**Acceptance criteria:**
-- `tasks` schema gets a nullable `dueDate` (timestamp) column
-  (schema change — flag for human review per LOOP.md Human Gates)
-- `TaskForm` gets an optional date input; `createTask`'s Zod schema
-  validates it as an optional valid date
-- `TaskItem` displays the formatted due date when set, and visually
-  marks the task as overdue (destructive-styled) when the due date is
-  in the past and the task is not `done`
-- Unit tests: due-date validation in the create-task schema, and an
-  `isOverdue`-style helper (or equivalent logic) covering past/future/
-  no-date/done cases
-- Component test for `TaskItem` overdue styling; e2e coverage for
-  creating a task with a due date and seeing it rendered
-- `pnpm snap /tasks` output visually inspected (include a seeded
-  overdue task if convenient)
-
-**PR:** https://github.com/muzafferkadir/nextjs-loop-engineering-starter/pull/2
-**Verifier:** APPROVE — all checks passed (contains a schema change,
-human approval required before merge)
+_(nothing in review)_
 
 ---
 

@@ -7,6 +7,13 @@ work for precedent when scoping new features.
 
 ---
 
+### F-004: Task Due Dates ✅
+**PR:** https://github.com/muzafferkadir/nextjs-loop-engineering-starter/pull/2
+- Nullable `dueDate` column on `tasks`, optional date input in
+  `TaskForm`, overdue styling in `TaskItem`
+- `isOverdue`/`formatDueDate` helpers with unit, component, and e2e
+  coverage; verifier APPROVE
+
 ### F-003: Deterministic Seed & E2E Rig ✅
 **Shipped in the initial codebase.**
 - Fixed-fixture seed (`src/db/seed.ts`), Playwright with pinned

@@ -1,6 +1,6 @@
 # STATE.md — Loop Memory
 
-Last run: 2026-07-04 13:50 UTC — Build (F-004)
+Last run: 2026-07-04 — Daily Triage (Report)
 Loop: Daily Triage (Report)
 Active feature: none
 
@@ -21,5 +21,4 @@ _(escalations — if anything sits here longer than 24h, check in)_
 
 ## Resolved (last 7 days)
 
-- F-004 (Task Due Dates): implemented, verifier APPROVE, PR #2 open —
-  waiting on human review (contains a schema change)
+- F-004 (Task Due Dates): PR #2 merged — moved to BACKLOG-DONE.md
