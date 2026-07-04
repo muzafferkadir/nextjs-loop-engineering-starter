@@ -50,3 +50,37 @@ this file is the audit trail that answers "what did the loop do?"
   değerlerine göre filtreleme" → fits one run (precedent: F-002 Task
   CRUD — single route, no schema change). Spec'd as F-005 (Task List
   Filter), added to Backlog.
+
+## 2026-07-04 22:57 UTC — Build (F-005)
+- Feature: F-005 Task List Filter — status/priority `<select>` filters
+  on `/tasks`, `parseTaskFilters` helper, filtering applied via
+  `searchParams` in the Server Component's Drizzle query, distinct
+  "no tasks match your filters" empty state
+- Fixed a client-side race: reading `useSearchParams()` when firing two
+  quick filter changes in succession dropped the first one; switched to
+  building the next URL from both selects' current DOM values (refs)
+- Tests: unit (`parseTaskFilters`), e2e (status filter, priority filter,
+  combined filters, empty state) — all passing
+- Visual check: `pnpm snap /tasks`, `/tasks?status=in_progress`,
+  `/tasks?status=todo&priority=high` inspected — clean layout, correct
+  filtering, correct empty state
+- Verifier: APPROVE (unit, build, e2e, secret scan, `any` scan)
+- PR: #3 (opened manually — `gh` CLI unavailable in-session)
+- Rejects: 0 (2 local e2e fix iterations before the verifier run)
+- Lock: acquired same session; held open across a session boundary
+  waiting on manual PR creation, released this triage run after
+  confirming the merge
+
+## 2026-07-04 — Daily Triage (Report)
+- Run ID: triage-20260704-2
+- Items checked: 3 PRs (all closed: #1 F-101 closed unmerged — pre-
+  existing template example, #2 F-004 merged, #3 F-005 merged), 1 CI
+  run on main (in progress, not red), 0 backlog features in Backlog,
+  1 in WIP (F-005, stale lock from a prior session)
+- Actions: confirmed PR #3 (F-005) merged; moved F-005 from BACKLOG.md
+  WIP to BACKLOG-DONE.md; released the stale F-005 loop lock; STATE.md
+  Active feature/Resolved/Last run updated; backfilled the missing
+  Build run log entry for F-005
+- Escalations: 0
+- Tokens: ~20000
+- Next run: 2026-07-05

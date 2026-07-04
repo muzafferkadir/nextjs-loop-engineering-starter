@@ -7,6 +7,13 @@ work for precedent when scoping new features.
 
 ---
 
+### F-005: Task List Filter ✅
+**PR:** https://github.com/muzafferkadir/nextjs-loop-engineering-starter/pull/3
+- Status/priority filter selects on `/tasks`, applied via `searchParams`
+  in the Server Component's Drizzle query — no client-side fetching
+- `parseTaskFilters` helper, distinct "no tasks match your filters"
+  empty state; unit + e2e coverage, verifier APPROVE
+
 ### F-004: Task Due Dates ✅
 **PR:** https://github.com/muzafferkadir/nextjs-loop-engineering-starter/pull/2
 - Nullable `dueDate` column on `tasks`, optional date input in
