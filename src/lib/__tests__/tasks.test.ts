@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  formatDueDate,
+  isOverdue,
   nextStatus,
   priorityLabel,
   statusBadgeVariant,
@@ -38,5 +40,39 @@ describe("statusBadgeVariant", () => {
       statusBadgeVariant("done"),
     ]);
     expect(variants.size).toBe(3);
+  });
+});
+
+describe("isOverdue", () => {
+  const now = new Date("2026-06-01T00:00:00Z");
+
+  it("returns false when there is no due date", () => {
+    expect(isOverdue(null, "todo", now)).toBe(false);
+  });
+
+  it("returns true for a past due date on a not-done task", () => {
+    expect(isOverdue(new Date("2026-01-01T00:00:00Z"), "in_progress", now)).toBe(
+      true,
+    );
+  });
+
+  it("returns false for a future due date", () => {
+    expect(isOverdue(new Date("2027-01-01T00:00:00Z"), "todo", now)).toBe(
+      false,
+    );
+  });
+
+  it("returns false for a done task even with a past due date", () => {
+    expect(isOverdue(new Date("2026-01-01T00:00:00Z"), "done", now)).toBe(
+      false,
+    );
+  });
+});
+
+describe("formatDueDate", () => {
+  it("formats a date as a short, human-readable string in UTC", () => {
+    expect(formatDueDate(new Date("2026-01-05T00:00:00Z"))).toBe(
+      "Jan 5, 2026",
+    );
   });
 });

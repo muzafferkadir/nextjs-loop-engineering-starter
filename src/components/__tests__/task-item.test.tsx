@@ -10,6 +10,7 @@ const baseTask: Task = {
   description: "Component render coverage",
   status: "in_progress",
   priority: "high",
+  dueDate: null,
   createdAt: new Date("2026-01-01T00:00:00Z"),
   updatedAt: new Date("2026-01-01T00:00:00Z"),
   deletedAt: null,
@@ -49,5 +50,46 @@ describe("TaskItem", () => {
       </ul>,
     );
     expect(screen.queryByText("Component render coverage")).toBeNull();
+  });
+
+  it("omits the due date when unset", () => {
+    render(
+      <ul>
+        <TaskItem task={baseTask} />
+      </ul>,
+    );
+    expect(screen.queryByText(/2026/)).toBeNull();
+  });
+
+  it("marks a past-due, not-done task as overdue", () => {
+    render(
+      <ul>
+        <TaskItem
+          task={{
+            ...baseTask,
+            status: "in_progress",
+            dueDate: new Date("2020-01-01T00:00:00Z"),
+          }}
+        />
+      </ul>,
+    );
+    const dueDate = screen.getByText("Jan 1, 2020");
+    expect(dueDate.className).toContain("text-destructive");
+  });
+
+  it("does not mark a done task as overdue even with a past due date", () => {
+    render(
+      <ul>
+        <TaskItem
+          task={{
+            ...baseTask,
+            status: "done",
+            dueDate: new Date("2020-01-01T00:00:00Z"),
+          }}
+        />
+      </ul>,
+    );
+    const dueDate = screen.getByText("Jan 1, 2020");
+    expect(dueDate.className).not.toContain("text-destructive");
   });
 });
