@@ -18,23 +18,7 @@ Backlog features; oversized ideas get split only with human approval)_
 
 ## Backlog
 
-### F-005: Task List Filter
-**Priority:** Medium
-**Description:** Signed-in users can filter the task list on `/tasks` by
-status and priority. Similar in scope to F-002 (Task CRUD): one route,
-no schema change, server-rendered.
-**Acceptance criteria:**
-- Status filter (All / Todo / In progress / Done) and priority filter
-  (All / Low / Medium / High) controls above the task list
-- Selected filters are reflected in the URL (e.g. `?status=&priority=`)
-  and combine with AND when both are set
-- Filtering happens in the Server Component's query via `searchParams`
-  — no client-side fetching
-- Distinct empty state when filters match zero tasks ("No tasks match
-  your filters") vs. the existing "no tasks yet" empty state
-- Unit test for the filter query-condition logic, e2e test selecting
-  status/priority and asserting the filtered results, `pnpm snap
-  /tasks?status=in_progress` output visually inspected
+_(empty — add your features here using the format below)_
 
 <!-- Feature format — copy this block into the Backlog and give it the
      next F-number. Acceptance criteria are exactly what the loop
@@ -59,7 +43,23 @@ no schema change, server-rendered.
 
 ## WIP
 
-_(nothing in progress — check the lock with: `bash scripts/loop-lock.sh status`)_
+### F-005: Task List Filter
+**Priority:** Medium
+**Description:** Signed-in users can filter the task list on `/tasks` by
+status and priority. Similar in scope to F-002 (Task CRUD): one route,
+no schema change, server-rendered.
+**Acceptance criteria:**
+- Status filter (All / Todo / In progress / Done) and priority filter
+  (All / Low / Medium / High) controls above the task list
+- Selected filters are reflected in the URL (e.g. `?status=&priority=`)
+  and combine with AND when both are set
+- Filtering happens in the Server Component's query via `searchParams`
+  — no client-side fetching
+- Distinct empty state when filters match zero tasks ("No tasks match
+  your filters") vs. the existing "no tasks yet" empty state
+- Unit test for the filter query-condition logic, e2e test selecting
+  status/priority and asserting the filtered results, `pnpm snap
+  /tasks?status=in_progress` output visually inspected
 
 ---
 
