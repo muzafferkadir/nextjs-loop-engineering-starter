@@ -29,16 +29,17 @@ services — no Docker, no cloud database, nothing to provision.
 Day to day you touch three things: the backlog, the loop command, and
 the PR queue.
 
-1. **Spec the work** — add a feature to `BACKLOG.md` (template inside),
-   or let the Planner write it for you:
-   `/loop-start plan <one-line idea>`.
-2. **Run the loop:**
-   - `/loop-start report` — triage only: scans PRs/CI/backlog, updates
-     STATE.md, **writes no code**. Start here on a new project (~10 runs
-     before trusting it with code).
-   - `/loop-start build` — implements ONE Backlog feature end-to-end
-     (branch, tests, screenshots, verifier) and opens a PR. It never
-     merges.
+| Mode | Command | What it does |
+|------|---------|--------------|
+| **Plan** | `/loop-start plan <idea>` (or `$loop-plan`) | Specs a one-line idea into checkable `BACKLOG.md` acceptance criteria. Writes no code. |
+| **Build** | `/loop-start build` (or `$loop-build`) | Implements ONE Backlog feature end-to-end (branch, tests, screenshots, verifier) and opens a PR. Never merges. |
+| **Report** | `/loop-start report` (or `$loop-report`) | Triages PRs/CI/backlog and updates STATE.md. Writes no code. Start here on a new project (~10 runs before trusting Build). |
+
+1. **Spec the work** — add a feature to `BACKLOG.md` yourself (template
+   inside), or run Plan mode above.
+2. **Run the loop** — Report to observe first; Build once you trust it
+   (see [Developing with the Loop](#developing-with-the-loop) for the
+   full sequencing).
 3. **Be the gate** — read the PR (verifier verdict + visual-check note
    are in the body), merge when satisfied, move the entry to
    `BACKLOG-DONE.md`, refill the backlog.
