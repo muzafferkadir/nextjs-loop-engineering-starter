@@ -1,11 +1,11 @@
 ---
 name: loop-fix
-description: Implements exactly one feature from the FEATURES.md Backlog — syncs main, acquires the loop lock, creates a feature branch, implements all acceptance criteria with tests, visually inspects UI changes, passes the independent verifier, and opens a PR. Use for Build-mode loop runs, or when asked to "implement a feature", "work the backlog", or "run build mode".
+description: Implements exactly one feature from the BACKLOG.md Backlog — syncs main, acquires the loop lock, creates a feature branch, implements all acceptance criteria with tests, visually inspects UI changes, passes the independent verifier, and opens a PR. Use for Build-mode loop runs, or when asked to "implement a feature", "work the backlog", or "run build mode".
 ---
 
 # loop-fix — Build Mode Skill (plan-execute-verify)
 
-Implement ONE feature from the FEATURES.md Backlog. Nothing else.
+Implement ONE feature from the BACKLOG.md Backlog. Nothing else.
 
 ---
 
@@ -19,7 +19,7 @@ Implement ONE feature from the FEATURES.md Backlog. Nothing else.
   ```
   **Dirty working tree or failed pull → do not touch anything.** Report
   it under "Waiting on Human" in STATE.md and STOP.
-- Read FEATURES.md — pick the highest-priority Backlog feature.
+- Read BACKLOG.md — pick the highest-priority Backlog feature.
 - Check the lock:
   ```bash
   bash scripts/loop-lock.sh status
@@ -29,7 +29,7 @@ Implement ONE feature from the FEATURES.md Backlog. Nothing else.
     ```bash
     bash scripts/loop-lock.sh acquire F-XXX
     ```
-- Move the feature Backlog → WIP in FEATURES.md.
+- Move the feature Backlog → WIP in BACKLOG.md.
 - Read AGENTS.md — stack, code rules, git protocol.
 
 ### 2. Implement
@@ -63,7 +63,7 @@ bash scripts/run-verifier.sh F-XXX
 
 ### 5. Finish (release the lock)
 - Open a PR per the AGENTS.md git protocol (include the verifier verdict)
-- Move the feature WIP → Review in FEATURES.md
+- Move the feature WIP → Review in BACKLOG.md
 - ```bash
   bash scripts/loop-lock.sh release
   ```

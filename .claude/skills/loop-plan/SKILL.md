@@ -1,12 +1,12 @@
 ---
 name: loop-plan
-description: Planner — turns a short feature idea into a detailed FEATURES.md spec before any Build run. Checks past similar work to decide whether the idea fits one loop run; if it is too broad, proposes a split into smaller features and asks the human to approve. Use when asked to "plan a feature", "spec this idea", "run the planner", or before adding anything to the Backlog.
+description: Planner — turns a short feature idea into a detailed BACKLOG.md spec before any Build run. Checks past similar work to decide whether the idea fits one loop run; if it is too broad, proposes a split into smaller features and asks the human to approve. Use when asked to "plan a feature", "spec this idea", "run the planner", or before adding anything to the Backlog.
 ---
 
 # loop-plan — Planner Skill (spec before code)
 
 Turn ONE short idea into a sprint contract: concrete, checkable
-acceptance criteria in FEATURES.md. **Write no code. Open no PRs.**
+acceptance criteria in BACKLOG.md. **Write no code. Open no PRs.**
 
 ---
 
@@ -14,11 +14,11 @@ acceptance criteria in FEATURES.md. **Write no code. Open no PRs.**
 
 ### 1. Take the idea
 - Input: the idea handed to you directly, or the top item under
-  `## Ideas` in FEATURES.md.
+  `## Ideas` in BACKLOG.md.
 - If STATE.md contains `loop: paused` — stop.
 
 ### 2. Study precedent — has similar work been done?
-- FEATURES.md `## Done` — similar features, their criteria count and scope
+- BACKLOG.md `## Done` — similar features, their criteria count and scope
 - loop-run-log.md — how many runs/rejects comparable features took
 - `git log --oneline -20` — the shape of comparable diffs
 
@@ -36,10 +36,10 @@ strongest "fits one run" signal.
 
 ### 4. Write the spec (fits one run)
 - Draft the F-XXX entry with the next free F-number, using the template
-  in FEATURES.md: concrete, checkable acceptance criteria; keep the
+  in BACKLOG.md: concrete, checkable acceptance criteria; keep the
   `pnpm snap` line for UI features; flag schema changes (human approval
   per LOOP.md Human Gates).
-- Add it to FEATURES.md `## Backlog` with a priority and a precedent
+- Add it to BACKLOG.md `## Backlog` with a priority and a precedent
   note ("similar to F-YYY, delivered in one run"). Remove the idea from
   `## Ideas` if it came from there.
 - Append one line to loop-run-log.md (`— Planner`).

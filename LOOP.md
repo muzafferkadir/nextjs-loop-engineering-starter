@@ -12,7 +12,7 @@ Every Build (feature) run is one plan-execute-verify loop:
 
 1. **Sync & lock** — `git checkout main && git pull --ff-only`. A dirty
    working tree or a failed pull → notify the human in STATE.md and STOP.
-   Then read FEATURES.md, take the highest-priority Backlog item, acquire
+   Then read BACKLOG.md, take the highest-priority Backlog item, acquire
    the loop lock (`scripts/loop-lock.sh`), move it to WIP.
 2. **Plan** — read the feature's acceptance criteria and the AGENTS.md
    rules; create the `feature/F-XXX-short-name` branch off fresh main.
@@ -29,7 +29,7 @@ Every Build (feature) run is one plan-execute-verify loop:
 
 Features enter the Backlog through the Planner
 (`.claude/skills/loop-plan/SKILL.md`): it turns a short idea into
-concrete acceptance criteria, uses past similar work (FEATURES.md Done,
+concrete acceptance criteria, uses past similar work (BACKLOG.md Done,
 loop-run-log.md, git log) to decide whether the idea fits ONE run, and
 splits oversized ideas into smaller features — a split is only added to
 the Backlog after human approval.
@@ -108,8 +108,8 @@ If more than one loop runs on this project:
 
 ## Notes
 
-- Planner (on demand): spec ONE idea into the FEATURES.md Backlog — no code
-- Report mode (first ~10 days): update STATE.md and FEATURES.md only — no code
-- Build mode: pick ONE feature from the FEATURES.md Backlog, implement,
+- Planner (on demand): spec ONE idea into the BACKLOG.md Backlog — no code
+- Report mode (first ~10 days): update STATE.md and BACKLOG.md only — no code
+- Build mode: pick ONE feature from the BACKLOG.md Backlog, implement,
   pass the verifier
 - Append a summary to loop-run-log.md after every run

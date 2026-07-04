@@ -27,7 +27,7 @@ Do not use `--fast` — a PR verdict requires the full pipeline.
   "improvements" → REJECT
 
 ### 3. Acceptance criteria
-Check the feature's criteria in FEATURES.md one by one:
+Check the feature's criteria in BACKLOG.md one by one:
 - [ ] each criterion implemented?
 - [ ] each criterion covered by a test (unit or e2e)?
 

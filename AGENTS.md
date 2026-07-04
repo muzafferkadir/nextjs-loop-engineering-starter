@@ -10,9 +10,9 @@ live in `.claude/skills/<name>/SKILL.md`.
 
 A task management web application built with Next.js and developed
 through loop engineering. Treat this as a real product codebase: the
-backlog in FEATURES.md defines what to build next, and every change goes
+backlog in BACKLOG.md defines what to build next, and every change goes
 through the verifier pipeline. Whatever the product owner puts in
-FEATURES.md is the product — build that.
+BACKLOG.md is the product — build that.
 
 ## Stack
 
@@ -117,12 +117,12 @@ Use `gh pr create`; the body must state which F-XXX it implements, paste the `pn
 
 ## Loop Engineering Context
 
-- **STATE.md / LOOP.md / FEATURES.md** — loop memory, config (denylist
+- **STATE.md / LOOP.md / BACKLOG.md** — loop memory, config (denylist
   and limits are single-sourced in LOOP.md), and backlog. Skills:
   loop-plan (Planner), loop-triage (Report mode), loop-fix (Build
   mode), ui-verify. Verifier: `.claude/agents/loop-verifier.md`
-- Report-mode runs triage only (STATE.md/FEATURES.md updates, no code);
-  Build mode takes ONE Backlog feature per the rules in FEATURES.md
+- Report-mode runs triage only (STATE.md/BACKLOG.md updates, no code);
+  Build mode takes ONE Backlog feature per the rules in BACKLOG.md
 - Never touch a denylisted path (LOOP.md) or work around the hook that
   blocks them — escalate to STATE.md "Waiting on Human" instead
 

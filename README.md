@@ -7,7 +7,7 @@ loop engineering requires already wired in.
 The development model is simple:
 
 ```
-you write features (FEATURES.md)
+you write features (BACKLOG.md)
         │
         ▼
 the loop implements them        ← agent: lock → branch → code + tests
@@ -62,9 +62,9 @@ bash scripts/verifier-self-test.sh      # prove the verifier isn't theater
 
 ## Developing with the Loop
 
-### Step 1 — Add a feature to FEATURES.md
+### Step 1 — Add a feature to BACKLOG.md
 
-The Backlog ships empty. Open `FEATURES.md`, copy the commented template
+The Backlog ships empty. Open `BACKLOG.md`, copy the commented template
 into the Backlog, and describe what you want:
 
 ```markdown
@@ -85,7 +85,7 @@ for UI features; flag schema changes (they require human approval, see
 LOOP.md → Human Gates).
 
 Or delegate the spec work to the Planner: hand the `$loop-plan` skill a
-one-line idea (or drop it under FEATURES.md ## Ideas). It checks past
+one-line idea (or drop it under BACKLOG.md ## Ideas). It checks past
 similar features, decides whether the idea fits a single run, writes
 the acceptance criteria — and when the idea is too broad, proposes a
 split into smaller features for your approval instead of speccing it
@@ -96,7 +96,7 @@ silently.
 Don't let the loop write code on day one. Start in report-only mode:
 
 ```
-/loop 1d Run $loop-triage. Read STATE.md and FEATURES.md first. No code changes.
+/loop 1d Run $loop-triage. Read STATE.md and BACKLOG.md first. No code changes.
 ```
 
 Each run, the agent scans PRs/CI/backlog and updates `STATE.md`. Your
@@ -129,7 +129,7 @@ You stay in the loop as the gate:
 - **Enforce the gate in GitHub** — protect `main` (Settings → Branches:
   require a pull request + the CI status check, no force pushes). "A human
   merges every PR" should be a repository setting, not a convention.
-- **Move the feature to Done** in FEATURES.md (or let the next triage do it).
+- **Move the feature to Done** in BACKLOG.md (or let the next triage do it).
 - **Refill the backlog** — the loop idles safely when Backlog is empty.
 - **Watch the health signals** — `loop-run-log.md` (what happened),
   `.loop/usage/` (what it cost — measured), STATE.md "Waiting on Human"
@@ -163,7 +163,7 @@ pnpm db:studio    # Drizzle Studio
 **Framework — keep and adapt** (the loop machinery):
 
 ```
-AGENTS.md  LOOP.md  STATE.md  FEATURES.md  loop-run-log.md
+AGENTS.md  LOOP.md  STATE.md  BACKLOG.md  loop-run-log.md
 .claude/   scripts/  .github/workflows/ci.yml
 playwright.config.ts  e2e/global-setup.ts
 ```
@@ -184,12 +184,12 @@ Work through these in order — each step keeps the rails intact:
 
 1. **Rename** — `package.json` name, this README's top section,
    `src/app/layout.tsx` metadata.
-2. **Write your backlog** — FEATURES.md, using the template (Step 1 above).
+2. **Write your backlog** — BACKLOG.md, using the template (Step 1 above).
 3. **Tune the rules** — AGENTS.md is the agent's style guide: code rules,
    UI conventions, git protocol. Whatever you don't write there, the
    agent decides for itself.
 4. **Swap the example app** — recommended: let the loop do it via
-   FEATURES.md items. Keep auth (`src/lib/auth.ts` is denylisted) or
+   BACKLOG.md items. Keep auth (`src/lib/auth.ts` is denylisted) or
    remove it along with the middleware and its e2e; keep
    `src/db/seed.ts` **deterministic** (fixed IDs and dates — e2e and
    `pnpm snap` depend on it); update `scripts/snap.mjs` login selectors

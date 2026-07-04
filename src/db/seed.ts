@@ -51,7 +51,7 @@ async function seed() {
     {
       id: "task-003",
       userId: "user-demo",
-      title: "Replace the example backlog in FEATURES.md",
+      title: "Replace the example backlog in BACKLOG.md",
       description: "Swap the demo features for your own product ideas.",
       status: "todo",
       priority: "medium",

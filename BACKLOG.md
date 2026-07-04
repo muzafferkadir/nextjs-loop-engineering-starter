@@ -1,4 +1,4 @@
-# FEATURES.md — Feature Backlog
+# BACKLOG.md — Feature Backlog
 
 The loop agent takes work from this file. States:
 - **Ideas** — raw, unspecced (the Planner turns these into Backlog features)
@@ -108,3 +108,7 @@ human approval required before merge)
 6. **Pass the verifier:** `bash scripts/run-verifier.sh F-XXX` must APPROVE
 7. **Open a PR** per the git protocol in AGENTS.md
 8. **Move to Review, release the lock:** `bash scripts/loop-lock.sh release`
+9. **Keep Done lean:** Done entries are 2–3-line summaries + PR link (the
+   full spec lives in the PR). When Done exceeds ~15 entries, move the
+   oldest ones to BACKLOG-ARCHIVE.md — they stay greppable as precedent
+   for the Planner.
