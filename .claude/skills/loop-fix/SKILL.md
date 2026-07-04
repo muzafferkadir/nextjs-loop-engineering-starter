@@ -1,9 +1,9 @@
 ---
 name: loop-fix
-description: Implements exactly one feature from the FEATURES.md Backlog — acquires the loop lock, creates a feature branch, implements all acceptance criteria with tests, visually inspects UI changes, passes the independent verifier, and opens a PR. Use for L2 loop runs, or when asked to "implement a feature", "work the backlog", or "run L2".
+description: Implements exactly one feature from the FEATURES.md Backlog — syncs main, acquires the loop lock, creates a feature branch, implements all acceptance criteria with tests, visually inspects UI changes, passes the independent verifier, and opens a PR. Use for Assisted-mode loop runs, or when asked to "implement a feature", "work the backlog", or "run assisted mode".
 ---
 
-# loop-fix — L2 Feature Implementation Skill
+# loop-fix — Assisted Mode Skill (plan-execute-verify)
 
 Implement ONE feature from the FEATURES.md Backlog. Nothing else.
 
@@ -11,8 +11,14 @@ Implement ONE feature from the FEATURES.md Backlog. Nothing else.
 
 ## Workflow
 
-### 1. Prepare (acquire the lock)
+### 1. Prepare (sync main + acquire the lock)
 - If STATE.md contains `loop: paused` — stop.
+- Sync main first:
+  ```bash
+  git checkout main && git pull --ff-only
+  ```
+  **Dirty working tree or failed pull → do not touch anything.** Report
+  it under "Waiting on Human" in STATE.md and STOP.
 - Read FEATURES.md — pick the highest-priority Backlog feature.
 - Check the lock:
   ```bash
@@ -51,7 +57,7 @@ bash scripts/run-verifier.sh F-XXX
   ```
   Reject count F-XXX: N
   ```
-- After 3 REJECTs:
+- After 5 REJECTs (Max rejects — LOOP.md ## Limits):
   1. Write `Escalation: F-XXX — <reason>` under "Waiting on Human" in STATE.md
   2. Stop the loop — wait for a human
 
@@ -78,6 +84,8 @@ If the feature adds tables or columns:
 ## Hard Rules
 
 - ONE feature at a time
+- Never commit to main — every feature lives on its own branch and
+  reaches main only through a PR a human merges
 - No denylist paths (LOOP.md ## Denylist) — if the feature seems to need
   one, escalate instead
 - No feature is "done" without tests

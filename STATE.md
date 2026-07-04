@@ -1,7 +1,7 @@
 # STATE.md — Loop Memory
 
 Last run: —
-Loop: Daily Triage (L1)
+Loop: Daily Triage (Report)
 Active feature: none
 
 <!-- Kill switch: change "active" to "paused" on the line below to stop all loops. -->

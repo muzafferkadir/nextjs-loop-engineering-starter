@@ -1,6 +1,6 @@
 ---
-description: "Start the loop engineering workflow — triage (L1) or feature development (L2)"
-argument-hint: "[l1|l2]"
+description: "Start the loop engineering workflow — triage (Report mode) or feature development (Assisted mode)"
+argument-hint: "[report|assisted|plan <idea>]"
 allowed-tools:
   - Bash
   - Read
@@ -12,21 +12,31 @@ allowed-tools:
 
 Read the following files in order:
 1. AGENTS.md — project context, stack, rules
-2. LOOP.md — active loops, budget, denylist
+2. LOOP.md — loop lifecycle, limits, denylist
 3. STATE.md — current state (if it says `loop: paused`, STOP immediately)
 4. FEATURES.md — feature backlog
 
 Then based on the argument:
 
-**If the argument is "l1" or empty:**
+**If the argument is "report", "l1", or empty:**
 Run the $loop-triage skill:
 - Check open PRs, CI status, FEATURES.md
 - Update STATE.md (High Priority, Watch List, Resolved)
 - Append to loop-run-log.md
 - DO NOT write code
 
-**If the argument is "l2":**
+**If the argument starts with "plan":**
+Run the $loop-plan skill with the rest of the argument as the idea
+(or the top FEATURES.md ## Ideas item if no idea is given):
+- Check precedent (FEATURES.md Done, loop-run-log.md, git log)
+- Fits one run → spec it into the Backlog
+- Too broad → propose a split and ASK THE HUMAN — never spec silently
+- DO NOT write code
+
+**If the argument is "assisted" or "l2":**
 Run the $loop-fix skill:
+- Sync main: `git checkout main && git pull --ff-only` — dirty tree or
+  failed pull → report in STATE.md and STOP
 - Check the lock: `bash scripts/loop-lock.sh status`
 - If free: acquire the lock, pick the highest-priority Backlog item
 - Implement all acceptance criteria with tests

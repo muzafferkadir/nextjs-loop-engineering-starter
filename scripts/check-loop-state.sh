@@ -52,18 +52,18 @@ if [ -f "$LOCK" ]; then
   }
 fi
 
-# 5. L2 guard — warn if feature work starts before 10 logged L1 runs
-L1_RUN_COUNT=$(grep -c "^## [0-9]" loop-run-log.md 2>/dev/null || echo 0)
-if [ "$WIP_ITEMS" -gt 0 ] && [ "$L1_RUN_COUNT" -lt 10 ]; then
-  echo "⚠️  L2 attempted with only $L1_RUN_COUNT logged L1 runs (recommended ≥10)"
-  echo "   Watch ~10 L1 triage runs before starting L2 feature work"
-  # Warning only — L2 readiness is a human call
+# 5. Assisted-mode guard — warn if feature work starts before 10 logged Report runs
+REPORT_RUN_COUNT=$(grep -c "^## [0-9]" loop-run-log.md 2>/dev/null || echo 0)
+if [ "$WIP_ITEMS" -gt 0 ] && [ "$REPORT_RUN_COUNT" -lt 10 ]; then
+  echo "⚠️  Assisted mode attempted with only $REPORT_RUN_COUNT logged Report runs (recommended ≥10)"
+  echo "   Watch ~10 Report (triage) runs before starting Assisted feature work"
+  # Warning only — Assisted readiness is a human call
 fi
 
 # 6. Budget configured
-BUDGET_LIMIT=$(grep "Daily limit:" loop-budget.md 2>/dev/null | grep -oE "[0-9,]+" | head -1)
+BUDGET_LIMIT=$(grep "Daily limit:" LOOP.md 2>/dev/null | grep -oE "[0-9,]+" | head -1)
 if [ -z "$BUDGET_LIMIT" ]; then
-  echo "⚠️  loop-budget.md has no daily limit set"
+  echo "⚠️  LOOP.md ## Limits has no daily limit set"
 else
   echo "✅ Budget limit set: $BUDGET_LIMIT tokens/day"
 fi

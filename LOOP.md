@@ -2,19 +2,58 @@
 
 ## Active Loops
 
-| Pattern | Cadence | Level | Status |
-|---------|---------|-------|--------|
-| Daily Triage | 1d | L1 | Active |
+| Pattern | Cadence | Mode | Status |
+|---------|---------|------|--------|
+| Daily Triage | 1d | Report | Active |
 
-## Budget
+## Loop Lifecycle
 
-- Max tokens/day: 100,000 (cost-weighted — cache reads count at 10%)
-- Alert at: 80,000
+Every Assisted (feature) run is one plan-execute-verify loop:
+
+1. **Sync & lock** — `git checkout main && git pull --ff-only`. A dirty
+   working tree or a failed pull → notify the human in STATE.md and STOP.
+   Then read FEATURES.md, take the highest-priority Backlog item, acquire
+   the loop lock (`scripts/loop-lock.sh`), move it to WIP.
+2. **Plan** — read the feature's acceptance criteria and the AGENTS.md
+   rules; create the `feature/F-XXX-short-name` branch off fresh main.
+   Every feature gets its own branch — never commit to main.
+3. **Execute** — implement the criteria one by one, each with its test;
+   visually inspect UI changes (ui-verify skill).
+4. **Verify** — run the independent verifier: `pnpm verify`. APPROVE is
+   the only exit from the loop.
+5. **Correct** — on REJECT, fix in the same session using the reject
+   reasons as feedback; track the attempt count in STATE.md.
+6. **Finish or escalate** — on APPROVE: open a PR, release the lock, log
+   the run. At Max rejects or the per-run budget: escalate under
+   "Waiting on Human" in STATE.md and stop.
+
+Features enter the Backlog through the Planner
+(`.claude/skills/loop-plan/SKILL.md`): it turns a short idea into
+concrete acceptance criteria, uses past similar work (FEATURES.md Done,
+loop-run-log.md, git log) to decide whether the idea fits ONE run, and
+splits oversized ideas into smaller features — a split is only added to
+the Backlog after human approval.
+
+Full procedures: `.claude/skills/loop-plan/SKILL.md` (Planner),
+`.claude/skills/loop-fix/SKILL.md` (Assisted) and
+`.claude/skills/loop-triage/SKILL.md` (Report — triage only, no code).
+
+## Limits
+
+All loop limits live in this section — the budget lines are parsed by
+scripts, so this is the single source of truth (like the denylist).
+
+- Per-run limit: 5,000,000 tokens (one run = one session, cost-weighted —
+  cache reads count at 10%)
+- Daily limit: 50,000,000 tokens (all loops combined)
+- Alert at: 40,000,000 tokens per day (warn, then finish the current run)
+- Max rejects: 5 (verifier REJECTs on one feature → escalate and stop)
 - Kill switch: write `loop: paused` into STATE.md
-- Measured, not self-reported: a Stop hook (scripts/hooks/log-usage.mjs)
-  records real transcript usage into .loop/usage/, and
-  scripts/budget-check.sh reads it (run-log estimates are only a fallback —
-  the check always uses the higher number)
+
+Usage is measured, not self-reported: a Stop hook
+(scripts/hooks/log-usage.mjs) records real transcript usage into
+.loop/usage/, and scripts/budget-check.sh reads it (run-log estimates
+are only a fallback — the check always uses the higher number).
 
 ## Denylist
 
@@ -45,7 +84,9 @@ a human, committed directly to main.
 - No auto-merge — a human merges every PR
 - Database schema changes → human approval before merge
 - Major dependency bumps → human decision
-- 3 failed fix attempts on one item → escalate and stop
+- Max rejects reached on one item (see ## Limits) → escalate and stop
+- Splitting a broad idea into multiple features → the Planner proposes,
+  a human approves
 - Anything touching a denylist path → human does it
 
 ## Multi-Loop Coordination
@@ -55,18 +96,20 @@ If more than one loop runs on this project:
 - Two agents never touch the same file concurrently (loop.lock locally,
   plus a git ref on origin so locks are visible across clones/worktrees —
   see scripts/loop-lock.sh)
-- The token budget is shared across all loops
+- The daily token budget is shared across all loops
 
-## L1 → L2 Transition Criteria
+## Report → Assisted Transition Criteria
 
-- At least 10 stable L1 runs logged in loop-run-log.md
+- At least 10 stable Report (triage) runs logged in loop-run-log.md
 - You read STATE.md after each run and trust the triage calls (human judgment)
 - Verifier self-test passes: `bash scripts/verifier-self-test.sh`
-- loop-budget.md filled in
+- ## Limits reviewed against real .loop/usage/ data
 - Denylist enforcement verified (self-test covers this)
 
 ## Notes
 
-- L1 (first ~10 days): update STATE.md and FEATURES.md only — no code
-- L2: pick a feature from the FEATURES.md Backlog, implement, pass the verifier
+- Planner (on demand): spec ONE idea into the FEATURES.md Backlog — no code
+- Report mode (first ~10 days): update STATE.md and FEATURES.md only — no code
+- Assisted mode: pick ONE feature from the FEATURES.md Backlog, implement,
+  pass the verifier
 - Append a summary to loop-run-log.md after every run

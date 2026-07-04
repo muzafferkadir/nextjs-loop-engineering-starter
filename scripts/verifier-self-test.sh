@@ -110,6 +110,6 @@ echo "Self-test: $PASS_COUNT passed, $FAIL_COUNT failed"
 if [ "$FAIL_COUNT" -eq 0 ]; then
   echo "✅ Verifier is not theater — it catches real violations"
 else
-  echo "❌ VERIFIER THEATER DETECTED — fix the guards before any L2 work"
+  echo "❌ VERIFIER THEATER DETECTED — fix the guards before any Assisted-mode work"
   exit 1
 fi

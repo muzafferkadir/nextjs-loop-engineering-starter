@@ -84,7 +84,14 @@ features — write them concrete and checkable. Keep the `pnpm snap` line
 for UI features; flag schema changes (they require human approval, see
 LOOP.md → Human Gates).
 
-### Step 2 — Run L1 first (observe, ~10 runs)
+Or delegate the spec work to the Planner: hand the `$loop-plan` skill a
+one-line idea (or drop it under FEATURES.md ## Ideas). It checks past
+similar features, decides whether the idea fits a single run, writes
+the acceptance criteria — and when the idea is too broad, proposes a
+split into smaller features for your approval instead of speccing it
+silently.
+
+### Step 2 — Run Report mode first (observe, ~10 runs)
 
 Don't let the loop write code on day one. Start in report-only mode:
 
@@ -94,22 +101,24 @@ Don't let the loop write code on day one. Start in report-only mode:
 
 Each run, the agent scans PRs/CI/backlog and updates `STATE.md`. Your
 daily 5 minutes: read STATE.md and ask "would I have flagged the same
-things?". After ~10 runs of triage you trust, you're ready for L2 —
-readiness is a human call.
+things?". After ~10 runs of triage you trust, you're ready for Assisted
+mode — readiness is a human call.
 
-### Step 3 — Start L2 (the loop builds features)
+### Step 3 — Start Assisted mode (the loop builds features)
 
 ```
 /loop 1d Run $loop-triage. Then if the Backlog has items, run $loop-fix for the highest priority.
 ```
 
-Or drive a single run by hand: `/loop-start l2`
+Or drive a single run by hand: `/loop-start assisted`
 
-For each feature the agent: acquires the lock → moves it to WIP →
-creates `feature/F-XXX-*` → implements every criterion with tests →
-screenshots the UI and inspects it (`ui-verify`) → runs the verifier
-(`pnpm verify` must APPROVE; 3 REJECTs → it escalates in STATE.md and
-stops) → opens a PR → moves the feature to Review → releases the lock.
+For each feature the agent: syncs main (`git pull --ff-only`; a dirty
+tree or failed pull stops the run) → acquires the lock → moves it to
+WIP → creates `feature/F-XXX-*` → implements every criterion with
+tests → screenshots the UI and inspects it (`ui-verify`) → runs the
+verifier (`pnpm verify` must APPROVE; 5 REJECTs → it escalates in
+STATE.md and stops) → opens a PR → moves the feature to Review →
+releases the lock. A human merges every PR.
 
 ### Step 4 — Review, merge, keep going
 
@@ -123,7 +132,7 @@ You stay in the loop as the gate:
 - **Move the feature to Done** in FEATURES.md (or let the next triage do it).
 - **Refill the backlog** — the loop idles safely when Backlog is empty.
 - **Watch the health signals** — `loop-run-log.md` (what happened),
-  `loop-budget.md` (what it cost), STATE.md "Waiting on Human"
+  `.loop/usage/` (what it cost — measured), STATE.md "Waiting on Human"
   (escalations; don't let items sit >24h).
 - **Emergency stop** — set `loop: paused` in STATE.md. Everything halts,
   including CI.
@@ -154,7 +163,7 @@ pnpm db:studio    # Drizzle Studio
 **Framework — keep and adapt** (the loop machinery):
 
 ```
-AGENTS.md  LOOP.md  STATE.md  FEATURES.md  loop-budget.md  loop-run-log.md
+AGENTS.md  LOOP.md  STATE.md  FEATURES.md  loop-run-log.md
 .claude/   scripts/  .github/workflows/ci.yml
 playwright.config.ts  e2e/global-setup.ts
 ```
@@ -190,9 +199,10 @@ Work through these in order — each step keeps the rails intact:
    `bash scripts/verifier-self-test.sh` (if you removed
    `src/lib/auth.ts` from the list, point self-test 4 at one of your own
    protected paths).
-6. **Calibrate the budget** — `loop-budget.md` defaults are conservative;
-   raise them after a week of real `loop-run-log.md` data.
-7. **Start at L1** — always. See Step 2 above.
+6. **Calibrate the limits** — LOOP.md ## Limits is the single source for
+   the per-run/daily budgets and the reject cap; tune them after a week
+   of real `.loop/usage/` data.
+7. **Start in Report mode** — always. See Step 2 above.
 
 ### Common adjustments
 
@@ -209,15 +219,31 @@ Work through these in order — each step keeps the rails intact:
 
 ## Loop Levels (short version)
 
-- **L1 (Report)** — the loop only triages and writes to STATE.md. Run this
+- **Report** — the loop only triages and writes to STATE.md. Run this
   for ~10 days and read its output daily before anything else.
-- **L2 (Assisted)** — the loop implements Backlog features; every PR passes
+- **Assisted** — the loop implements Backlog features; every PR passes
   the independent verifier; a human merges.
-- **L3 (Unattended)** — not configured here on purpose. Earn it first.
+- **Unattended** — not configured here on purpose. Earn it first.
 
 This starter implements the loop engineering methodology — goal
 delegation, independent verification, state persistence, and human
 gates — as framed by Addy Osmani's "Loop Engineering" essay.
+
+---
+
+## Further Reading
+
+Background essays this starter draws on:
+
+| Article | Source |
+|---------|--------|
+| [Effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) | Anthropic |
+| [Harness design for long-running app development](https://www.anthropic.com/engineering/harness-design-long-running-apps) | Anthropic |
+| [Agent harness engineering](https://addyosmani.com/blog/agent-harness-engineering/) | Addy Osmani |
+| [What is loop engineering?](https://www.mindstudio.ai/blog/what-is-loop-engineering-ai-coding-agents) | MindStudio |
+| [What is agent harness architecture?](https://www.mindstudio.ai/blog/what-is-agent-harness-architecture-explained) | MindStudio |
+| [Loop engineering for AI agents](https://pub.towardsai.net/loop-engineering-for-ai-agents-building-verifiable-self-correcting-coding-workflows-8b32c72184a1) | Towards AI |
+| [Claude Code in large codebases](https://code.claude.com/docs/en/large-codebases) | Claude Code Docs |
 
 ---
 

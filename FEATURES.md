@@ -1,10 +1,18 @@
 # FEATURES.md — Feature Backlog
 
 The loop agent takes work from this file. States:
-- **Backlog** — not started
+- **Ideas** — raw, unspecced (the Planner turns these into Backlog features)
+- **Backlog** — specced, not started
 - **WIP** — being implemented right now (lock acquired)
 - **Review** — PR open, waiting for human review
 - **Done** — completed
+
+---
+
+## Ideas
+
+_(one-line raw ideas — the Planner (`$loop-plan`) specs them into
+Backlog features; oversized ideas get split only with human approval)_
 
 ---
 
