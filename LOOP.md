@@ -29,7 +29,7 @@ Every Build (feature) run is one plan-execute-verify loop:
 
 Features enter the Backlog through the Planner
 (`.claude/skills/loop-plan/SKILL.md`): it turns a short idea into
-concrete acceptance criteria, uses past similar work (BACKLOG.md Done,
+concrete acceptance criteria, uses past similar work (BACKLOG-DONE.md,
 loop-run-log.md, git log) to decide whether the idea fits ONE run, and
 splits oversized ideas into smaller features — a split is only added to
 the Backlog after human approval.
