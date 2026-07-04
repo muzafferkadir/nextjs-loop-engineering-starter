@@ -44,3 +44,9 @@ this file is the audit trail that answers "what did the loop do?"
 - Escalations: 0
 - Tokens: ~15000
 - Next run: 2026-07-05
+
+## 2026-07-04 — Planner
+- Idea: "todo listesine bir filtre ekleyelim, status ve priority
+  değerlerine göre filtreleme" → fits one run (precedent: F-002 Task
+  CRUD — single route, no schema change). Spec'd as F-005 (Task List
+  Filter), added to Backlog.

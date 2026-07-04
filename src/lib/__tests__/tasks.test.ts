@@ -3,6 +3,7 @@ import {
   formatDueDate,
   isOverdue,
   nextStatus,
+  parseTaskFilters,
   priorityLabel,
   statusBadgeVariant,
   statusLabel,
@@ -74,5 +75,37 @@ describe("formatDueDate", () => {
     expect(formatDueDate(new Date("2026-01-05T00:00:00Z"))).toBe(
       "Jan 5, 2026",
     );
+  });
+});
+
+describe("parseTaskFilters", () => {
+  it("returns undefined for both filters when no params are given", () => {
+    expect(parseTaskFilters({})).toEqual({
+      status: undefined,
+      priority: undefined,
+    });
+  });
+
+  it("parses a valid status and priority", () => {
+    expect(
+      parseTaskFilters({ status: "in_progress", priority: "high" }),
+    ).toEqual({ status: "in_progress", priority: "high" });
+  });
+
+  it("treats unknown values as no filter", () => {
+    expect(
+      parseTaskFilters({ status: "archived", priority: "urgent" }),
+    ).toEqual({ status: undefined, priority: undefined });
+  });
+
+  it("parses status and priority independently", () => {
+    expect(parseTaskFilters({ status: "done" })).toEqual({
+      status: "done",
+      priority: undefined,
+    });
+    expect(parseTaskFilters({ priority: "low" })).toEqual({
+      status: undefined,
+      priority: "low",
+    });
   });
 });
