@@ -31,9 +31,9 @@ the PR queue.
 
 | Mode | Command | What it does |
 |------|---------|--------------|
-| **Plan** | `/loop-start plan <idea>` (or `$loop-plan`) | Specs a one-line idea into checkable `BACKLOG.md` acceptance criteria. Writes no code. |
-| **Build** | `/loop-start build` (or `$loop-build`) | Implements ONE Backlog feature end-to-end (branch, tests, screenshots, verifier) and opens a PR. Never merges. |
-| **Report** | `/loop-start report` (or `$loop-report`) | Triages PRs/CI/backlog and updates STATE.md. Writes no code. Start here on a new project (~10 runs before trusting Build). |
+| **Plan** | `/loop-start plan <idea>` (or shortly `/loop-plan`) | Specs a one-line idea into checkable `BACKLOG.md` acceptance criteria. Writes no code. |
+| **Build** | `/loop-start build` (or shortly `/loop-build`) | Implements ONE Backlog feature end-to-end (branch, tests, screenshots, verifier) and opens a PR. Never merges. |
+| **Report** | `/loop-start report` (or shortly `/loop-report`) | Triages PRs/CI/backlog and updates STATE.md. Writes no code. Start here on a new project (~10 runs before trusting Build). |
 
 1. **Spec the work** — add a feature to `BACKLOG.md` yourself (template
    inside), or run Plan mode above.
@@ -111,7 +111,7 @@ for UI features; flag schema changes (they require human approval, see
 LOOP.md → Human Gates).
 
 Or delegate the spec work to the Planner: `/loop-start plan <one-line idea>`
-(or invoke the `$loop-plan` skill directly), or drop the idea under
+(or shortly `/loop-plan <one-line idea>`), or drop the idea under
 BACKLOG.md ## Ideas and let the Planner pick it up. It checks past
 similar features, decides whether the idea fits a single run, writes
 the acceptance criteria — and when the idea is too broad, proposes a

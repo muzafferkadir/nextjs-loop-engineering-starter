@@ -23,6 +23,9 @@ Run the $loop-report skill:
 - Update STATE.md (High Priority, Watch List, Resolved)
 - Append to loop-run-log.md
 - DO NOT write code
+- Commit the state update: ask first if a human is present in this
+  session; if this is an unattended scheduled run, commit and push
+  directly to main and report the change — no PR needed for loop memory
 
 **If the argument starts with "plan":**
 Run the $loop-plan skill with the rest of the argument as the idea

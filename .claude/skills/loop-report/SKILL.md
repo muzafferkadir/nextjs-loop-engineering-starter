@@ -40,6 +40,15 @@ Daily triage. **Write no code.** Report only.
    - Tokens: <estimate — real usage is measured by the Stop hook into .loop/usage/>
    - Next run: <date>
    ```
+9. **Commit the state update** (STATE.md / BACKLOG.md / BACKLOG-DONE.md /
+   loop-run-log.md — loop memory, not feature code, so this commits
+   straight to main, no branch or PR):
+   - **Interactive session** (a human is present in the conversation) →
+     ask before committing: "Commit and push these triage updates?"
+   - **Unattended run** (scheduled `/loop`, no human to ask) → commit
+     and push directly, then report what changed in the run summary —
+     this is a routine action, not an escalation, so it doesn't need
+     "Waiting on Human".
 
 ---
 
