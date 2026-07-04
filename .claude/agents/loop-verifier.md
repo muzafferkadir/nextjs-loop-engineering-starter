@@ -79,4 +79,4 @@ To prove this verifier is not theater:
 bash scripts/verifier-self-test.sh
 ```
 Run it after cloning and after any change to guard scripts. If a planted
-violation gets approved, fix the verifier before any Assisted-mode work.
+violation gets approved, fix the verifier before any Build-mode work.

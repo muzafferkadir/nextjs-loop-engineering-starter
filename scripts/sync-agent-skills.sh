@@ -15,7 +15,7 @@ ROOT="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 TMPDIR="$(mktemp -d)"
 trap 'rm -rf "$TMPDIR"' EXIT INT TERM
 
-SKILLS="loop-fix loop-triage ui-verify"
+SKILLS="loop-fix loop-plan loop-triage ui-verify"
 STATUS=0
 
 copy_or_check() {

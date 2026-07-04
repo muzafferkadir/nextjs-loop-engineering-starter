@@ -1,6 +1,6 @@
 ---
-description: "Start the loop engineering workflow — triage (Report mode) or feature development (Assisted mode)"
-argument-hint: "[report|assisted|plan <idea>]"
+description: "Start the loop engineering workflow — triage (Report mode) or feature development (Build mode)"
+argument-hint: "[report|build|plan <idea>]"
 allowed-tools:
   - Bash
   - Read
@@ -18,7 +18,7 @@ Read the following files in order:
 
 Then based on the argument:
 
-**If the argument is "report", "l1", or empty:**
+**If the argument is "report" or empty:**
 Run the $loop-triage skill:
 - Check open PRs, CI status, FEATURES.md
 - Update STATE.md (High Priority, Watch List, Resolved)
@@ -33,7 +33,7 @@ Run the $loop-plan skill with the rest of the argument as the idea
 - Too broad → propose a split and ASK THE HUMAN — never spec silently
 - DO NOT write code
 
-**If the argument is "assisted" or "l2":**
+**If the argument is "build":**
 Run the $loop-fix skill:
 - Sync main: `git checkout main && git pull --ff-only` — dirty tree or
   failed pull → report in STATE.md and STOP

@@ -52,12 +52,12 @@ if [ -f "$LOCK" ]; then
   }
 fi
 
-# 5. Assisted-mode guard — warn if feature work starts before 10 logged Report runs
+# 5. Build-mode guard — warn if feature work starts before 10 logged Report runs
 REPORT_RUN_COUNT=$(grep -c "^## [0-9]" loop-run-log.md 2>/dev/null || echo 0)
 if [ "$WIP_ITEMS" -gt 0 ] && [ "$REPORT_RUN_COUNT" -lt 10 ]; then
-  echo "⚠️  Assisted mode attempted with only $REPORT_RUN_COUNT logged Report runs (recommended ≥10)"
-  echo "   Watch ~10 Report (triage) runs before starting Assisted feature work"
-  # Warning only — Assisted readiness is a human call
+  echo "⚠️  Build mode attempted with only $REPORT_RUN_COUNT logged Report runs (recommended ≥10)"
+  echo "   Watch ~10 Report (triage) runs before starting Build feature work"
+  # Warning only — Build readiness is a human call
 fi
 
 # 6. Budget configured

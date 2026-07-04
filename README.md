@@ -101,16 +101,16 @@ Don't let the loop write code on day one. Start in report-only mode:
 
 Each run, the agent scans PRs/CI/backlog and updates `STATE.md`. Your
 daily 5 minutes: read STATE.md and ask "would I have flagged the same
-things?". After ~10 runs of triage you trust, you're ready for Assisted
+things?". After ~10 runs of triage you trust, you're ready for Build
 mode — readiness is a human call.
 
-### Step 3 — Start Assisted mode (the loop builds features)
+### Step 3 — Start Build mode (the loop builds features)
 
 ```
 /loop 1d Run $loop-triage. Then if the Backlog has items, run $loop-fix for the highest priority.
 ```
 
-Or drive a single run by hand: `/loop-start assisted`
+Or drive a single run by hand: `/loop-start build`
 
 For each feature the agent: syncs main (`git pull --ff-only`; a dirty
 tree or failed pull stops the run) → acquires the lock → moves it to
@@ -221,9 +221,8 @@ Work through these in order — each step keeps the rails intact:
 
 - **Report** — the loop only triages and writes to STATE.md. Run this
   for ~10 days and read its output daily before anything else.
-- **Assisted** — the loop implements Backlog features; every PR passes
+- **Build** — the loop implements Backlog features; every PR passes
   the independent verifier; a human merges.
-- **Unattended** — not configured here on purpose. Earn it first.
 
 This starter implements the loop engineering methodology — goal
 delegation, independent verification, state persistence, and human

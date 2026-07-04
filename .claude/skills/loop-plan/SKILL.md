@@ -1,6 +1,6 @@
 ---
 name: loop-plan
-description: Planner — turns a short feature idea into a detailed FEATURES.md spec before any Assisted run. Checks past similar work to decide whether the idea fits one loop run; if it is too broad, proposes a split into smaller features and asks the human to approve. Use when asked to "plan a feature", "spec this idea", "run the planner", or before adding anything to the Backlog.
+description: Planner — turns a short feature idea into a detailed FEATURES.md spec before any Build run. Checks past similar work to decide whether the idea fits one loop run; if it is too broad, proposes a split into smaller features and asks the human to approve. Use when asked to "plan a feature", "spec this idea", "run the planner", or before adding anything to the Backlog.
 ---
 
 # loop-plan — Planner Skill (spec before code)
@@ -52,8 +52,8 @@ strongest "fits one run" signal.
 - Get approval:
   - Interactive session → present the split (each proposed F-XXX with a
     one-line scope) and ask directly.
-  - Unattended run → write the proposal under "Waiting on Human" in
-    STATE.md and stop.
+  - Scheduled (non-interactive) run → write the proposal under
+    "Waiting on Human" in STATE.md and stop.
 - Only after human approval: add the approved features to `## Backlog`.
 
 ---
@@ -61,7 +61,7 @@ strongest "fits one run" signal.
 ## Never Do
 
 - Write code or tests, open PRs (the Planner plans; the Generator builds)
-- Move items to WIP (that's Assisted-mode work)
+- Move items to WIP (that's Build-mode work)
 - Touch denylist paths (LOOP.md ## Denylist)
 - Silently split a broad idea — a split always gets human sign-off
 - Inflate scope: spec exactly the idea, not adjacent "improvements"

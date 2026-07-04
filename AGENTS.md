@@ -2,7 +2,7 @@
 
 ## How to Start a Loop
 
-See README.md → "Developing with the Loop" for the Report/Assisted mode
+See README.md → "Developing with the Loop" for the Report/Build mode
 commands. Skills
 live in `.claude/skills/<name>/SKILL.md`.
 
@@ -119,10 +119,10 @@ Use `gh pr create`; the body must state which F-XXX it implements, paste the `pn
 
 - **STATE.md / LOOP.md / FEATURES.md** — loop memory, config (denylist
   and limits are single-sourced in LOOP.md), and backlog. Skills:
-  loop-plan (Planner), loop-triage (Report mode), loop-fix (Assisted
+  loop-plan (Planner), loop-triage (Report mode), loop-fix (Build
   mode), ui-verify. Verifier: `.claude/agents/loop-verifier.md`
 - Report-mode runs triage only (STATE.md/FEATURES.md updates, no code);
-  Assisted mode takes ONE Backlog feature per the rules in FEATURES.md
+  Build mode takes ONE Backlog feature per the rules in FEATURES.md
 - Never touch a denylisted path (LOOP.md) or work around the hook that
   blocks them — escalate to STATE.md "Waiting on Human" instead
 

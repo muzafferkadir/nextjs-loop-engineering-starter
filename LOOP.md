@@ -8,7 +8,7 @@
 
 ## Loop Lifecycle
 
-Every Assisted (feature) run is one plan-execute-verify loop:
+Every Build (feature) run is one plan-execute-verify loop:
 
 1. **Sync & lock** — `git checkout main && git pull --ff-only`. A dirty
    working tree or a failed pull → notify the human in STATE.md and STOP.
@@ -35,7 +35,7 @@ splits oversized ideas into smaller features — a split is only added to
 the Backlog after human approval.
 
 Full procedures: `.claude/skills/loop-plan/SKILL.md` (Planner),
-`.claude/skills/loop-fix/SKILL.md` (Assisted) and
+`.claude/skills/loop-fix/SKILL.md` (Build) and
 `.claude/skills/loop-triage/SKILL.md` (Report — triage only, no code).
 
 ## Limits
@@ -98,7 +98,7 @@ If more than one loop runs on this project:
   see scripts/loop-lock.sh)
 - The daily token budget is shared across all loops
 
-## Report → Assisted Transition Criteria
+## Report → Build Transition Criteria
 
 - At least 10 stable Report (triage) runs logged in loop-run-log.md
 - You read STATE.md after each run and trust the triage calls (human judgment)
@@ -110,6 +110,6 @@ If more than one loop runs on this project:
 
 - Planner (on demand): spec ONE idea into the FEATURES.md Backlog — no code
 - Report mode (first ~10 days): update STATE.md and FEATURES.md only — no code
-- Assisted mode: pick ONE feature from the FEATURES.md Backlog, implement,
+- Build mode: pick ONE feature from the FEATURES.md Backlog, implement,
   pass the verifier
 - Append a summary to loop-run-log.md after every run
