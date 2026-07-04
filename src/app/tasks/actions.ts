@@ -16,6 +16,11 @@ const createTaskSchema = z.object({
   title: z.string().trim().min(1, "Title is required").max(200),
   description: z.string().trim().max(2000).optional(),
   priority: z.enum(TASK_PRIORITIES).default("medium"),
+  dueDate: z
+    .string()
+    .trim()
+    .refine((value) => !Number.isNaN(Date.parse(value)), "Invalid due date")
+    .optional(),
 });
 
 export async function createTask(
@@ -29,6 +34,7 @@ export async function createTask(
     title: formData.get("title"),
     description: formData.get("description") || undefined,
     priority: formData.get("priority") ?? "medium",
+    dueDate: formData.get("dueDate") || undefined,
   });
   if (!parsed.success) {
     return { error: parsed.error.errors[0]?.message ?? "Invalid input" };
@@ -40,6 +46,7 @@ export async function createTask(
     title: parsed.data.title,
     description: parsed.data.description ?? null,
     priority: parsed.data.priority,
+    dueDate: parsed.data.dueDate ? new Date(parsed.data.dueDate) : null,
   });
 
   revalidatePath("/tasks");

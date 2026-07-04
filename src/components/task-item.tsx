@@ -1,8 +1,15 @@
 import { Trash2 } from "lucide-react";
 import type { Task } from "@/db/schema";
-import { priorityLabel, statusBadgeVariant, statusLabel } from "@/lib/tasks";
+import {
+  formatDueDate,
+  isOverdue,
+  priorityLabel,
+  statusBadgeVariant,
+  statusLabel,
+} from "@/lib/tasks";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type TaskItemProps = {
   task: Task;
@@ -27,6 +34,18 @@ export function TaskItem({ task, onAdvance, onDelete }: TaskItemProps) {
       <Badge variant="outline" className="shrink-0">
         {priorityLabel(task.priority)}
       </Badge>
+      {task.dueDate && (
+        <span
+          className={cn(
+            "shrink-0 text-xs",
+            isOverdue(task.dueDate, task.status)
+              ? "font-medium text-destructive"
+              : "text-muted-foreground",
+          )}
+        >
+          {formatDueDate(task.dueDate)}
+        </span>
+      )}
       <form action={onAdvance?.bind(null, task.id)} className="shrink-0">
         <Button
           type="submit"

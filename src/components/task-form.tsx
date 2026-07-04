@@ -36,6 +36,12 @@ export function TaskForm() {
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
+        <Input
+          type="date"
+          name="dueDate"
+          aria-label="Due date"
+          className="w-auto"
+        />
         <Button type="submit" disabled={pending}>
           {pending ? "Adding…" : "Add"}
         </Button>

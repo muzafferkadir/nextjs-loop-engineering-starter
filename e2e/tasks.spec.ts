@@ -22,6 +22,25 @@ test("creates a task and shows it in the list", async ({ page }) => {
   await expect(item.getByText("High")).toBeVisible();
 });
 
+test("creates a task with a due date and shows it in the list", async ({
+  page,
+}) => {
+  await page.getByLabel("Task title").fill("Task with a due date");
+  await page.getByLabel("Due date").fill("2099-01-01");
+  await page.getByRole("button", { name: "Add" }).click();
+
+  const item = page.locator("li", { hasText: "Task with a due date" });
+  await expect(item).toBeVisible();
+  await expect(item.getByText("Jan 1, 2099")).toBeVisible();
+});
+
+test("shows an overdue due date for an unfinished seeded task", async ({
+  page,
+}) => {
+  const item = page.getByTestId("task-task-002");
+  await expect(item.getByText("Jan 1, 2026")).toBeVisible();
+});
+
 test("advances a task through the status cycle", async ({ page }) => {
   const item = page.getByTestId("task-task-003");
   await expect(item.getByText("To do")).toBeVisible();

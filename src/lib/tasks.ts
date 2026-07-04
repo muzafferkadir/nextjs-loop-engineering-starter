@@ -40,3 +40,20 @@ export function statusBadgeVariant(
       return "outline";
   }
 }
+
+/** A task is overdue if it has a due date in the past and isn't done. */
+export function isOverdue(
+  dueDate: Date | null,
+  status: TaskStatus,
+  now: Date = new Date(),
+): boolean {
+  if (!dueDate || status === "done") return false;
+  return dueDate.getTime() < now.getTime();
+}
+
+export function formatDueDate(dueDate: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeZone: "UTC",
+  }).format(dueDate);
+}

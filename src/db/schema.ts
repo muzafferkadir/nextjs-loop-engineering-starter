@@ -33,6 +33,7 @@ export const tasks = sqliteTable("tasks", {
   priority: text("priority", { enum: TASK_PRIORITIES })
     .notNull()
     .default("medium"),
+  dueDate: integer("due_date", { mode: "timestamp" }),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .$defaultFn(() => new Date()),
